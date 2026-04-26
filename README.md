@@ -2,11 +2,10 @@
 
 BioGuard is a small research prototype for screening biological AI conversations before risk is carried across turns. The core idea is simple: treat the conversation as the safety boundary, score each risky knowledge-transfer event with one shared rubric, and return a replayable decision record.
 
-This repository is the public paper and reproducibility surface for the AIxBio submission. It keeps the runnable code, benchmark manifests, skill pack, and evidence files together so reviewers can check the main claim without reading internal planning notes.
+This repository is the public code and reproducibility surface for the AIxBio submission. It keeps the runnable code, benchmark manifests, skill pack, and evidence files together so reviewers can check the main claim without reading internal planning notes.
 
 ## What To Read First
 
-- `bioguard_aixbio_submission.tex`: workshop-style paper draft.
 - `docs/BioGuard_Technical_Specification.md`: plain-English system overview.
 - `docs/BKT_Rubric_Draft.md`: human-readable scoring rubric.
 - `docs/Operational_Runbook.md`: commands needed to reproduce checks and metrics.
