@@ -1,0 +1,444 @@
+openapi: 3.1.0
+info:
+  title: BioGuard Protocol API
+  version: 0.1.0
+  description: |
+    Canonical API for protocol-level screening and evaluation.
+    The API is not a product feature; it is an implementation contract for reproducibility.
+servers:
+  - url: https://api.example.org
+    description: Placeholder host
+paths:
+  /v1/screen:
+    post:
+      operationId: screenConversation
+      summary: Screen a conversation window
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScreenRequest"
+      responses:
+        "200":
+          description: Decision envelope produced.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScreenResponse"
+        "400":
+          description: Validation error in payload.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        "422":
+          description: Unsupported contract/feature mismatch with the selected profile.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+  /v1/evaluate:
+    post:
+      operationId: runEvaluation
+      summary: Run benchmark comparisons
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EvalRequest"
+      responses:
+        "200":
+          description: Evaluation outputs for all configured conditions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvalResponse"
+        "400":
+          description: Invalid split, baseline, or dataset reference.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+components:
+  schemas:
+    ScreenRequest:
+      type: object
+      required:
+        - request_id
+        - conversation_id
+        - turns
+        - policy_profile
+        - host_id
+      additionalProperties: false
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        conversation_id:
+          type: string
+        turns:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/ConversationTurn"
+        policy_profile:
+          $ref: "#/components/schemas/PolicyProfile"
+        host_id:
+          type: string
+          example: claude-code
+        contract_version:
+          type: string
+          example: bkt-v1.0
+        include_sequences:
+          type: boolean
+          default: false
+        skill_overrides:
+          type: object
+          additionalProperties: true
+    ConversationTurn:
+      type: object
+      required:
+        - actor
+        - text
+        - index
+      additionalProperties: false
+      properties:
+        actor:
+          type: string
+          enum: [user, assistant, system]
+        text:
+          type: string
+        index:
+          type: integer
+          minimum: 0
+        ts_utc:
+          type: string
+          format: date-time
+    PolicyProfile:
+      type: object
+      required:
+        - mode
+        - threshold_allow
+        - threshold_review
+      additionalProperties: false
+      properties:
+        mode:
+          type: string
+          enum: [allow, review, block]
+          default: review
+        threshold_allow:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 0.45
+        threshold_review:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 0.75
+        include_bio_seq:
+          type: boolean
+          default: false
+        include_session_context:
+          type: boolean
+          default: true
+    ScreenResponse:
+      type: object
+      required:
+        - request_id
+        - conversation_id
+        - request_ts_utc
+        - decision
+        - decision_reason
+        - bkt_events
+        - policy_profile
+        - model_id
+        - generated_at_utc
+        - host_context
+      additionalProperties: false
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        conversation_id:
+          type: string
+        request_ts_utc:
+          type: string
+          format: date-time
+        decision:
+          type: string
+          enum: [allow, review, block]
+        decision_hash:
+          type: string
+          description: SHA-256 envelope fingerprint for audit replay
+        decision_reason:
+          type: string
+          maxLength: 240
+        model_id:
+          type: string
+        policy_profile:
+          $ref: "#/components/schemas/PolicyProfile"
+        bkt_events:
+          type: array
+          items:
+            $ref: "#/components/schemas/BKTEvent"
+        sequence_findings:
+          type: array
+          items:
+            $ref: "#/components/schemas/SequenceFinding"
+        host_context:
+          $ref: "#/components/schemas/HostContext"
+        generated_at_utc:
+          type: string
+          format: date-time
+    EvalRequest:
+      type: object
+      required:
+        - request_id
+        - dataset_manifest
+        - splits
+        - baselines
+      additionalProperties: false
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        dataset_manifest:
+          type: string
+          description: "Path to manifest instance file"
+          example: spec/benchmark_manifest_v1.0.json
+        splits:
+          type: array
+          items:
+            type: string
+            enum: [train, dev, test, all]
+        baselines:
+          type: array
+          items:
+            type: string
+            enum: [bioguard, llama-guard-3, keyword-filter, gpt54-zero-shot, pre-inference-only, post-inference-only]
+        include_bootstrap:
+          type: boolean
+          default: true
+        baseline_seed:
+          type: integer
+          minimum: 0
+        seeds:
+          type: array
+          items:
+            type: integer
+        bootstrap_reps:
+          type: integer
+          default: 2000
+    EvalResponse:
+      type: object
+      required:
+        - request_id
+        - run_id
+        - metrics
+      additionalProperties: false
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        run_id:
+          type: string
+        metrics:
+          type: array
+          items:
+            $ref: "#/components/schemas/MetricsRow"
+        artifact_paths:
+          type: object
+          additionalProperties: false
+          properties:
+            metrics_json:
+              type: string
+            confusion_table:
+              type: string
+            plots:
+              type: array
+              items:
+                type: string
+    BKTEvent:
+      type: object
+      required:
+        - version
+        - event_id
+        - conversation_id
+        - turn_index
+        - source_span
+        - composite_score
+        - composite_label
+        - scope
+        - depth
+        - uplift
+        - domain
+        - uncertainty
+        - timestamp_utc
+        - auditable
+      properties:
+        version:
+          type: string
+          example: bkt-v1.0
+        event_id:
+          type: string
+        conversation_id:
+          type: string
+        turn_index:
+          type: integer
+          minimum: 0
+        source_span:
+          type: object
+          required:
+            - actor
+            - turns
+            - snippet_hashes
+          properties:
+            actor:
+              type: string
+              enum: [user, assistant, system]
+            turns:
+              type: array
+              items:
+                type: integer
+              minItems: 1
+            snippet_hashes:
+              type: array
+              items:
+                type: string
+        composite_score:
+          type: number
+          minimum: 0
+          maximum: 1
+        composite_label:
+          type: string
+          enum: [allow, review, block]
+        scope:
+          $ref: "#/components/schemas/DimensionScore"
+        depth:
+          $ref: "#/components/schemas/DimensionScore"
+        uplift:
+          $ref: "#/components/schemas/DimensionScore"
+        domain:
+          type: string
+          enum:
+            - virology
+            - bacterial
+            - synthetic-biology
+            - toxicology
+            - unknown
+        uncertainty:
+          type: string
+          enum: [low, med, high]
+        model_trace:
+          type: string
+          nullable: true
+        rationale:
+          type: string
+          maxLength: 240
+        timestamp_utc:
+          type: string
+          format: date-time
+        auditable:
+          type: boolean
+    DimensionScore:
+      type: object
+      required: [score, label, reason]
+      additionalProperties: false
+      properties:
+        score:
+          type: number
+          minimum: 0
+          maximum: 1
+        label:
+          type: string
+          enum: [low, medium, high, critical]
+        reason:
+          type: string
+          maxLength: 120
+    SequenceFinding:
+      type: object
+      required: [sequence_id, risk_label, risk_score]
+      properties:
+        sequence_id:
+          type: string
+        risk_label:
+          type: string
+        risk_score:
+          type: number
+          minimum: 0
+          maximum: 1
+    MetricsRow:
+      type: object
+      required:
+        - condition
+        - recall_at_fpr_5
+        - ci95_low
+        - ci95_high
+      additionalProperties: false
+      properties:
+        condition:
+          type: string
+        recall_at_fpr_5:
+          type: number
+        ci95_low:
+          type: number
+        ci95_high:
+          type: number
+        ppv:
+          type: number
+        specificity:
+          type: number
+        fpr:
+          type: number
+        samples:
+          type: integer
+        seed:
+          type: integer
+        tier:
+          type: string
+        significant_vs_baseline:
+          type: boolean
+        latency_p95_ms:
+          type: number
+    HostContext:
+      type: object
+      required:
+        - host_id
+        - skill_id
+        - contract_version
+        - artifact_version
+      additionalProperties: false
+      properties:
+        host_id:
+          type: string
+        skill_id:
+          type: string
+        contract_version:
+          type: string
+        artifact_version:
+          type: string
+        model_id:
+          type: string
+    ProblemDetail:
+      type: object
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+        trace_id:
+          type: string

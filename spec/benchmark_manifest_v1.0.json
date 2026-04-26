@@ -1,0 +1,52 @@
+{
+  "annotation_protocol": "multi-rater adjudication with one pass arbitration.",
+  "created_at_utc": "2026-04-23T00:00:00Z",
+  "curation_notes": [
+    "Seed corpus used for hackathon stage.",
+    "500 synthetic seed cases are generated per split at default for the ambitious hackathon state."
+  ],
+  "dataset_id": "bioguard-biosession",
+  "description": "Seed BioSession release used for hackathon validation.",
+  "files": [
+    {
+      "num_items": 500,
+      "path": "/Users/jasontang/bioguard/artifacts/data/biosession-500-train.jsonl",
+      "sha256": "185d130e10ad9957d0c9a87ffcc314971eaec8a4a5b09633f2f20d16d07ab92c",
+      "split": "train"
+    },
+    {
+      "num_items": 500,
+      "path": "/Users/jasontang/bioguard/artifacts/data/biosession-500-dev.jsonl",
+      "sha256": "83756db0aa1b184ae8823e578b256d451a9e4a5d8b2fad3cdad7a726a91d2e34",
+      "split": "dev"
+    },
+    {
+      "num_items": 500,
+      "path": "/Users/jasontang/bioguard/artifacts/data/biosession-500-test.jsonl",
+      "sha256": "6539f7e194f6be218973ce7e2fc36c27dc7adf0ad7cc6b306f32ba3389407f59",
+      "split": "test"
+    }
+  ],
+  "license": "CC-BY-4.0",
+  "manifest_version": "1.0",
+  "quality_gates": {
+    "adjudication_rounds": 2,
+    "max_unresolved_conflicts": 0.08,
+    "min_interrater_alpha": 0.72
+  },
+  "rater_guideline_version": "bkt-guideline-v1.0",
+  "source_reference": "https://example.org/bioguard/manifest-source",
+  "splits": {
+    "dev": 500,
+    "test": 500,
+    "train": 500
+  },
+  "tiers": [
+    "tier-1-novice",
+    "tier-2-capable",
+    "tier-3-advanced",
+    "tier-cbrn"
+  ],
+  "updated_at_utc": "2026-04-25T07:16:48Z",
+  "version": "v0.1"
+}

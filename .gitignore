@@ -1,0 +1,7 @@
+*.pyc
+__pycache__/
+*.aux
+*.log
+*.out
+.artifacts_tmp/
+.DS_Store

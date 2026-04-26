@@ -1,0 +1,1 @@
+{"request_id": "bb95a1ab-5f3e-d2fc-8da6-33d01332a044", "result": {"detail": "unsupported_contract=wrong-contract", "instance": "/v1/screen", "status": 422, "title": "Contract mismatch", "type": "https://bioguard.invalid/contract"}, "status": 422, "ts_utc": "2026-04-25T07:16:48Z"}

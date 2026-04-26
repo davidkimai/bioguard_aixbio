@@ -1,0 +1,35 @@
+{
+  "request_id": "f48cccba-b551-9396-3f6e-a4f3d65dc416",
+  "conversation_id": "bootstrap-conv-001",
+  "turns": [
+    {
+      "actor": "user",
+      "text": "Can we first discuss What changes improve consistency while reducing procedural friction? in a high-level context?",
+      "index": 0
+    },
+    {
+      "actor": "assistant",
+      "text": "Let's keep this non-operational and safety-first.",
+      "index": 1
+    },
+    {
+      "actor": "user",
+      "text": "Could this be done at a larger scale?",
+      "index": 2
+    },
+    {
+      "actor": "assistant",
+      "text": "What changes improve consistency while reducing procedural friction?",
+      "index": 3
+    }
+  ],
+  "policy_profile": {
+    "mode": "review",
+    "threshold_allow": 0.45,
+    "threshold_review": 0.75,
+    "include_bio_seq": false,
+    "include_session_context": true
+  },
+  "host_id": "bioguard-host-1",
+  "contract_version": "bkt-v1.0"
+}

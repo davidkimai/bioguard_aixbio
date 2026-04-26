@@ -1,0 +1,223 @@
+{
+  "matrix_version": "1.1.0",
+  "generated_utc": "2026-04-23T13:22:00Z",
+  "contract_version": "bkt-v1.0",
+  "rows": [
+    {
+      "host_id": "reference-host",
+      "requirement_id": "spec_bkt_contract_validation",
+      "status": "PASS",
+      "trace_id": "trace-r1",
+      "evidence_path": "artifacts/checks/protocol_lock.json",
+      "notes": "Contract fields and labels are parseable."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "api_contract_validation",
+      "status": "PASS",
+      "trace_id": "trace-r2",
+      "evidence_path": "artifacts/records/seed_screen.jsonl",
+      "notes": "POST /screen returns expected status on valid and invalid payloads."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "pre_inference",
+      "status": "PASS",
+      "trace_id": "trace-r3",
+      "evidence_path": "artifacts/records/skill_bio_trace.json",
+      "notes": "Pre-inference check runs over user turns and recent context."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "post_inference",
+      "status": "PASS",
+      "trace_id": "trace-r4",
+      "evidence_path": "artifacts/records/skill_bio_trace.json",
+      "notes": "Post-inference check runs over assistant turns and recent context."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "schema_validation",
+      "status": "PASS",
+      "trace_id": "trace-r5",
+      "evidence_path": "artifacts/checks/protocol_lock.json",
+      "notes": "Decision schema checks pass for default profile."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "audit_hash_replay_supported",
+      "status": "FALLBACK",
+      "trace_id": "trace-r6",
+      "evidence_path": "artifacts/metrics/reproducibility.md",
+      "notes": "Replay is deterministic with seed and manifest; remote export remains unavailable.",
+      "owner": "core-implementation",
+      "reason": "Host-native remote audit export is not exposed in this run.",
+      "decision_consequence": "accepted",
+      "remediation_plan": "Document a bounded replay contract and add host-specific export hooks in the next host-integration iteration."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "deviation_tracking",
+      "status": "PASS",
+      "trace_id": "trace-r7",
+      "evidence_path": "artifacts/conformance/deviation_matrix.json",
+      "notes": "Deviation rows are explicit and schema-aligned."
+    },
+    {
+      "host_id": "reference-host",
+      "requirement_id": "skill_pack_install",
+      "status": "PASS",
+      "trace_id": "trace-r8",
+      "evidence_path": "artifacts/records/skill_bio_guard.json",
+      "notes": "Skill pack install + invocation smoke passed."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "spec_bkt_contract_validation",
+      "status": "PASS",
+      "trace_id": "trace-c1",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-2.json",
+      "notes": "Contract schema and event fields validated by proxy smoke."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "api_contract_validation",
+      "status": "PASS",
+      "trace_id": "trace-c2",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-2.json",
+      "notes": "Decision payload shape consistent in compatibility probe."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "pre_inference",
+      "status": "PASS",
+      "trace_id": "trace-c3",
+      "evidence_path": "artifacts/records/skill_bio_trace.json",
+      "notes": "Pre-inference path supported with short-window context."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "post_inference",
+      "status": "PASS",
+      "trace_id": "trace-c4",
+      "evidence_path": "artifacts/records/skill_bio_guard.json",
+      "notes": "Post-inference path supported with same envelope schema."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "schema_validation",
+      "status": "FALLBACK",
+      "trace_id": "trace-c5",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-2.json",
+      "notes": "Schema enforcement is currently local; host-native checker unavailable.",
+      "owner": "protocol-engine",
+      "reason": "No native validator exposed in this probe path.",
+      "decision_consequence": "accepted",
+      "remediation_plan": "Expose host-native schema checks and log failures for at-rest traces."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "audit_hash_replay_supported",
+      "status": "FALLBACK",
+      "trace_id": "trace-c6",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-2.json",
+      "notes": "Deterministic replay supported; host-native trace export not native.",
+      "owner": "core-implementation",
+      "reason": "Export API is probe-local only.",
+      "decision_consequence": "accepted",
+      "remediation_plan": "Attach replay artifact path as an explicit host metadata field in subsequent compatibility captures."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "deviation_tracking",
+      "status": "PASS",
+      "trace_id": "trace-c7",
+      "evidence_path": "artifacts/conformance/deviation_matrix.json",
+      "notes": "Host feature deltas are explicitly recorded."
+    },
+    {
+      "host_id": "codex-host",
+      "requirement_id": "skill_pack_install",
+      "status": "PASS",
+      "trace_id": "trace-c8",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-2.json",
+      "notes": "Skills import and execution smoke checks passed."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "spec_bkt_contract_validation",
+      "status": "PASS",
+      "trace_id": "trace-g1",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Contract fields validated against baseline checks."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "api_contract_validation",
+      "status": "PASS",
+      "trace_id": "trace-g2",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Screen status transitions and required fields are present."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "pre_inference",
+      "status": "PASS",
+      "trace_id": "trace-g3",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Pre-inference path supported in compatibility probe."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "post_inference",
+      "status": "FALLBACK",
+      "trace_id": "trace-g4",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Post-inference currently relies on explicit fallback scoring.",
+      "owner": "core-implementation",
+      "reason": "Manual scoring path was needed to collect comparable traces in this probe.",
+      "decision_consequence": "monitor",
+      "remediation_plan": "Complete native post-inference path or formally mark this host as partial-deployment only."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "schema_validation",
+      "status": "RESTRICTED",
+      "trace_id": "trace-g5",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Host-native schema enforcement was not exposed in this probe.",
+      "owner": "protocol-engine",
+      "reason": "Current host surface does not expose a policy-safe schema validation endpoint.",
+      "decision_consequence": "repair",
+      "remediation_plan": "Publish schema enforcement fallback in host docs and add explicit warning if host validation is absent."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "audit_hash_replay_supported",
+      "status": "FALLBACK",
+      "trace_id": "trace-g6",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Replay uses seeded fixture path; no native export yet.",
+      "owner": "core-implementation",
+      "reason": "No native export endpoint for replay bundles on this host.",
+      "decision_consequence": "accepted",
+      "remediation_plan": "Limit deployment guidance to seeded replay or equivalent deterministic fixture exports."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "deviation_tracking",
+      "status": "PASS",
+      "trace_id": "trace-g7",
+      "evidence_path": "artifacts/conformance/deviation_matrix.json",
+      "notes": "Deviations are declared and trace-linked."
+    },
+    {
+      "host_id": "github-copilot-host",
+      "requirement_id": "skill_pack_install",
+      "status": "PASS",
+      "trace_id": "trace-g8",
+      "evidence_path": "artifacts/conformance/host_capability_profile_host-3.json",
+      "notes": "Skills install smoke passed."
+    }
+  ]
+}

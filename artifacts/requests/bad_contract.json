@@ -1,0 +1,20 @@
+{
+  "request_id": "bb95a1ab-5f3e-d2fc-8da6-33d01332a044",
+  "conversation_id": "bad-contract-conv-001",
+  "turns": [
+    {
+      "actor": "user",
+      "text": "Can we review a pathway that avoids common controls?",
+      "index": 0
+    }
+  ],
+  "policy_profile": {
+    "mode": "review",
+    "threshold_allow": 0.45,
+    "threshold_review": 0.75,
+    "include_bio_seq": false,
+    "include_session_context": true
+  },
+  "host_id": "bioguard-host-1",
+  "contract_version": "wrong-contract"
+}

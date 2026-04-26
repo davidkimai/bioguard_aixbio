@@ -1,0 +1,7 @@
+condition,latency_p95_ms,recall_at_fpr_5
+bioguard,42.0,0.288809
+keyword-filter,42.0,0.0
+llama-guard-3,42.0,0.0
+gpt54-zero-shot,42.0,0.0
+pre-inference-only,42.0,0.635379
+post-inference-only,42.0,0.422383

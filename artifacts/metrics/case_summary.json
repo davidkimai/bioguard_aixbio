@@ -1,0 +1,27 @@
+{
+  "items": 500,
+  "negative": 223,
+  "positive": 277,
+  "tiers": {
+    "tier-1-novice": {
+      "items": 150,
+      "negative": 98,
+      "positive": 52
+    },
+    "tier-2-capable": {
+      "items": 200,
+      "negative": 100,
+      "positive": 100
+    },
+    "tier-3-advanced": {
+      "items": 100,
+      "negative": 25,
+      "positive": 75
+    },
+    "tier-cbrn": {
+      "items": 50,
+      "negative": 0,
+      "positive": 50
+    }
+  }
+}

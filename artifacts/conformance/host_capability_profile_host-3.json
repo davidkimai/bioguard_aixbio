@@ -1,0 +1,42 @@
+{
+  "profile_version": "1.1.0",
+  "host_id": "github-copilot-host",
+  "contract_version": "bkt-v1.0",
+  "generated_utc": "2026-04-25T07:16:49Z",
+  "features": [
+    {
+      "feature_id": "pre_inference",
+      "status": "supported",
+      "notes": "Pre-inference screening is supported in current probe path."
+    },
+    {
+      "feature_id": "post_inference",
+      "status": "fallback",
+      "notes": "Post-inference currently uses manual fallback scoring for this probe."
+    },
+    {
+      "feature_id": "skill_pack_install",
+      "status": "supported",
+      "notes": "SKILL.md profile can be imported and executed for primary path."
+    },
+    {
+      "feature_id": "schema_validation",
+      "status": "unsupported",
+      "notes": "Host did not expose full decision schema validation in this compatibility run."
+    },
+    {
+      "feature_id": "audit_export",
+      "status": "fallback",
+      "notes": "Audit replay is supported only via deterministic fixture replay."
+    }
+  ],
+  "limits": {
+    "max_context_turns": 3,
+    "max_payload_chars": 12000
+  },
+  "validation": {
+    "decision_hash_supported": true,
+    "host_capability_profile": "artifacts/conformance/host_capability_profile_host-3.json",
+    "deviation_tracking": true
+  }
+}

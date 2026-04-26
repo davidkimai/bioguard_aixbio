@@ -1,0 +1,23 @@
+{
+  "files": {
+    "/Users/jasontang/bioguard/spec/benchmark_manifest.schema.json": "ok",
+    "/Users/jasontang/bioguard/spec/benchmark_manifest_v1.0.json": {
+      "reason": "jsonschema unavailable",
+      "status": "skip"
+    },
+    "/Users/jasontang/bioguard/spec/bioguard_api.openapi.yaml": "ok",
+    "/Users/jasontang/bioguard/spec/bkt_contract_v1.0.json": "ok",
+    "/Users/jasontang/bioguard/spec/bkt_event.schema.json": "ok",
+    "/Users/jasontang/bioguard/spec/decision_envelope.schema.json": "ok",
+    "/Users/jasontang/bioguard/spec/execution_state_manifest.schema.json": "ok",
+    "/Users/jasontang/bioguard/spec/execution_state_manifest_v1.0.json": {
+      "reason": "jsonschema unavailable",
+      "status": "skip"
+    },
+    "runtime_seed_screen_contract": {
+      "reason": "jsonschema unavailable",
+      "status": "skip"
+    }
+  },
+  "status": "ok"
+}

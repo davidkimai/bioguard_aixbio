@@ -1,0 +1,224 @@
+\documentclass[11pt]{article}
+\usepackage[top=1.1in, bottom=1.1in, left=1.1in, right=1.1in]{geometry}
+\usepackage{times}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage[normalem]{ulem}
+\usepackage[enumerate]{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{3ex plus 0.8ex minus 0.3ex}{1ex plus 0.2ex}
+\titleformat*{\section}{\normalfont\Large\bfseries}
+
+\newcommand{\subsectiongray}[1]{%
+  \vspace{2.5ex plus 0.5ex}%
+  \noindent{\normalfont\large\color{gray}#1}%
+  \vspace{0.6ex}\par\noindent%
+}
+
+\begin{document}
+
+\vspace*{0.2in}
+\hrule height 1.8pt
+\vspace{0.45in}
+\begin{center}
+{\LARGE\bfseries BioGuard: A Portable Conversation-Layer Protocol for Biological AI Safety\footnotemark[1]\par}
+\end{center}
+\vspace{0.3in}
+\hrule height 0.6pt
+\vspace{0.5in}
+
+\footnotetext[1]{Research conducted at the
+  \href{https://www.aixbiosecurity.com/}{AIxBio Hackathon}, April 2026}
+
+\begin{center}
+Jason Tang\
+Independent Researcher
+\textbf{With}\
+Apart Research
+\end{center}
+
+\vspace{0.35in}
+
+\begin{center}
+{\large\bfseries Abstract}
+\end{center}
+\vspace{0.12in}
+\begin{quote}
+Current biological AI safety checks are usually attached too late, often at the
+ordering stage or after model output appears. That misses the real transfer
+moment, where risk can be assembled across turns before any risky sequence is
+submitted. We present BioGuard as a portable protocol layer for bio-LLM
+interfaces. BioGuard uses a small number of reusable `SKILL.md` blocks to apply one
+standard screening contract: Biological Knowledge Transfer (BKT) scoring. The core
+claim is a practical one: this contract can be evaluated as a real protocol, and we can
+measure whether it catches harmful biological knowledge transfer better than
+stateless controls when assessed on multi-turn, frontier-like attack prompts.
+
+This submission implements the protocol first, with evaluation as proof: a seeded, multi-tier
+benchmark; fixed-FPR comparison against baselines; and reproducible packaging for
+cross-host portability checks. The project is built to be auditable and
+operator-actionable, including explicit failure logic, contract metadata, and a
+revision path for both success and null results.
+\end{quote}
+
+\section{Core Question}
+
+Can a portable, conversation-layer protocol improve control of harmful biological
+capability transfer, and does the BKT scoring contract make that control more
+reliable than stateless baselines in multi-turn settings?
+
+\section{Why this matters now}
+
+Real workflows now do a lot of biological work in model conversations before a
+single nucleotide or molecule is produced. If risk is built up across prompts,
+screening only at synthesis order or after one response is too late. BioGuard
+targets this live safety boundary directly.
+
+This is the missing layer for current systems: either model-level safety
+signals or downstream sequence checks, with weak support for shared protocol
+semantics across tools. We need the same contract to move with the workflow
+across hosts.
+
+\section{Theory of Change}
+
+The mechanism is not a larger model or a single extra heuristic. The mechanism is
+contract design.
+
+If hosts implement the same BKT contract, then a conversation turn can be scored
+the same way across systems and operators can compare outputs with lower ambiguity.
+If turn scores are aggregated with a fixed policy, we can ask testable questions:
+\begin{itemize}[label=--, itemsep=1pt]
+  \item does risk accumulate across turns in a way the contract catches?
+  \item are false positives controlled at a fixed operating point?
+  \item can this be repeated on a second host without changing the meaning of the decision?
+\end{itemize}
+
+The contract matters because it makes failures visible: where the mechanism
+breaks, what context it misses, and how to revise thresholds, windows, or policy
+defaults.
+
+\section{Method and Approach}
+
+\subsectiongray{Units and contract}
+
+Primary scoring unit is a BKT event tied to a turn and source span. Units roll into a
+single auditable envelope with decision, rationale bounds, host metadata, and
+stable hashes.
+
+\subsectiongray{Interventions}
+
+BioGuard uses five interoperable blocks:
+\begin{itemize}[label=--, itemsep=1pt]
+  \item bkt-scoring block: event contract and event schema generation
+  \item bio-trace block: pre/post screening and core envelope construction
+  \item bio-guard block: operator-facing orchestration surface
+  \item bio-seq block: optional sequence extension for ablation
+  \item benchmark package: seeded BioSession corpus with tiered attack sets
+\end{itemize}
+
+The implementation is intentionally thin. The protocol defines the contract; the
+runtime enforces it.
+
+\subsectiongray{Evaluation surfaces}
+
+We evaluate with fixed false-positive control (5\%) and explicit baselines:
+Llama Guard 3, keyword filtering, GPT-5.4 zero-shot, and ablated BioGuard paths
+(pre-only, post-only, plus optional bio-seq). Primary outcome is recall uplift for
+Tier 2 decomposition prompts. We also compute bootstrap uncertainty, McNemar
+comparisons, and portability friction.
+
+\subsectiongray{Reproducibility}
+
+Every run ties to:
+\begin{itemize}[label=--, itemsep=1pt]
+  \item contract hash and seed
+  \item fixed command log
+  \item manifest IDs for dataset splits
+  \item evidence bundle with checksums and timestamps
+\end{itemize}
+This allows replay from a single manifest path.
+
+\section{Contribution}
+
+BioGuard contributes one protocol surface and one reproducible test strategy:
+\begin{itemize}[label=--, itemsep=1pt]
+  \item a composable protocol stack for pre/post conversation screening,
+  \item a BKT scoring contract that can be compared by policy makers and operators,
+  \item a portable skill pack with clear host mapping, and
+  \item benchmark-backed evidence that is explicit about what works, what partially
+    works, and what remains unresolved.
+\end{itemize}
+
+The result is intentionally constrained but operational: a reusable gate in front
+of biological capabilities, not a full monolithic safety platform.
+
+\section{Failure Interpretation}
+
+We do not claim success on one pass.
+
+Our interpretation is:
+\begin{itemize}[label=--, itemsep=1pt]
+  \item \textbf{Success:} recall uplift at fixed 5\% FPR, stable schema conformance, and successful cross-host reproduction.
+  \item \textbf{Partial success:} gain on one of recall, portability, or stability with clear trade-offs.
+  \item \textbf{Informative failure:} no uplift but a useful revision rule set, for example a tighter session boundary, new context windowing, or narrower threat unit.
+\end{itemize}
+
+\section{Collaborators and Next Steps}
+
+This work is most useful when three roles are aligned:
+\begin{itemize}[label=--, itemsep=1pt]
+  \item biosecurity practitioners to stress the threat set,
+  \item platform operators to validate host portability, and
+  \item safety evaluation teams to run independent replays.
+\end{itemize}
+
+Near-term: finish protocol hardening against two additional hosts, publish a minimal
+cross-host benchmark pass/fail rubric, and keep the submission package judge-safe:
+code, manifest, and evidence only.
+
+\section*{Code and Data}
+
+\textbf{Code repository:} \href{https://github.com/davidkimai/bioguard_aixbio}{https://github.com/davidkimai/bioguard_aixbio}
+\textbf{Data/Datasets:} seeded benchmark and reproducibility artifacts in repository artifacts and spec manifests.
+\textbf{Artifacts:} conformance and evidence bundles are included in submission packaging.
+
+\section*{References}
+\begin{enumerate}
+  \item RAND Corporation, 2025. \textit{AI and Biosecurity: Frontier Model Uplift Assessment.}
+  \item SecureBio, 2025. \textit{Virology Capabilities Test (VCT).}
+  \item Russinovich, Salem, Eldan, 2024. \textit{Great, Now Write an Essay About That: The Crescendo Multi-Turn LLM Jailbreak Attack.}
+  \item Anthropic, 2026. \textit{Claude Code Skills.}
+  \item GitHub, 2026. \textit{Manage agent skills with GitHub CLI.}
+  \item GitHub, 2026. \textit{Add skills to cloud agents.}
+  \item OpenAI, 2026. \textit{Codex and Agent Skills.}
+  \item Agent Skills, 2026. \textit{The SKILL.md Open Standard for Reusable Agent Capabilities.}
+\end{enumerate}
+
+\section*{Appendix: Limitations and Dual-Use}
+
+Dual-use risks are real: a detailed protocol can become a target for bypass testing.
+We withhold high-risk attack material where needed and include a staged-release
+policy for sensitive traces.
+
+\subsectiongray{Limitations}
+
+This protocol is not a replacement for policy, lab-level process control, or
+sequence-level review; it is an additional intervention point.
+
+\section*{LLM Usage Statement}
+
+LLM support was used for phrasing and structure only. Core technical claims,
+data, and commands were checked against repository artifacts.
+
+\end{document}

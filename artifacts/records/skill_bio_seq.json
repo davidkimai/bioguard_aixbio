@@ -1,0 +1,8 @@
+{
+  "block": "bioguard-bio-seq",
+  "findings": [],
+  "notes": "Optional ablation module not yet wired to a dedicated toxicity model.",
+  "risk_profile": "placeholder",
+  "sequence_hash": "sha256:1be8b785ee71fd214b4b61a783b1c9eab846da527b456f2267a66e246238ea38",
+  "status": "ok"
+}

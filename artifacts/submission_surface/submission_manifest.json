@@ -1,0 +1,140 @@
+{
+  "files": [
+    {
+      "path": "Makefile",
+      "sha256": "96e8eceee8a7b3245b9f2e03b32ce74444b2633a178e3139730ad810d8ca2a82",
+      "size_bytes": 3863
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "567653f40b999a927485a2d2a2d75ec6a33e2676d2ec88ff8f39b0172b66b60e",
+      "size_bytes": 313
+    },
+    {
+      "path": "scripts/bioguard_skill_proxy.py",
+      "sha256": "06f787ba9b7c58d4ec8e47e5ad77094b3dc85fb57150dcc5f8ba574060bbc70c",
+      "size_bytes": 4241
+    },
+    {
+      "path": "scripts/build_evidence_manifest.py",
+      "sha256": "9681668d50df76df25725957fd03bb5f4fca2fce50ba429f7e9a98f09b5064ce",
+      "size_bytes": 7131
+    },
+    {
+      "path": "scripts/build_submission_surface.py",
+      "sha256": "bccf937630a56b67906c5d55be5978d3c2c2ebf2786c539e8699ee9e3d1b9cf1",
+      "size_bytes": 3034
+    },
+    {
+      "path": "skills/README.md",
+      "sha256": "b325e6ba080252216425ba00e1d84d3e7326d33a653b96d895281d1974a4db28",
+      "size_bytes": 1590
+    },
+    {
+      "path": "skills/bioguard-bio-guard/SKILL.md",
+      "sha256": "2038b7334cd60b085743cf18eeb68c46a326a82264ddc90a6e7bc76f46750b1c",
+      "size_bytes": 1098
+    },
+    {
+      "path": "skills/bioguard-bio-seq/SKILL.md",
+      "sha256": "3fa3ea00121c8fd3e9d4532e1df6fcb1aaaaf84bfe0776a29184fadc6ea3cad8",
+      "size_bytes": 943
+    },
+    {
+      "path": "skills/bioguard-bio-trace/SKILL.md",
+      "sha256": "e003ee524ad211935d2a191d1f07121adb503981de4fc889ed03d02cfdc394a4",
+      "size_bytes": 1167
+    },
+    {
+      "path": "skills/bioguard-bkt-scoring/SKILL.md",
+      "sha256": "7280a3bd8812ecc0cda68fc68292b89a7d935b33090d4c130f597aac839903a4",
+      "size_bytes": 1088
+    },
+    {
+      "path": "spec/benchmark_manifest.schema.json",
+      "sha256": "52c1f8ed94723d2b86eb84cdeadb841c2f126a731ab89d9492e893849eafe7fa",
+      "size_bytes": 3031
+    },
+    {
+      "path": "spec/benchmark_manifest_v1.0.json",
+      "sha256": "7fbce9c6bf4f6ccfc3a7f20cb3c2ffeeccbc5921c56e6737c944f5a32bb3c702",
+      "size_bytes": 1649
+    },
+    {
+      "path": "spec/bioguard_api.openapi.yaml",
+      "sha256": "0b9ab3412c7ec3cb8a62d2a5ae0cbcd620a0d0913cf3e826381759ca50335936",
+      "size_bytes": 10906
+    },
+    {
+      "path": "spec/bkt_contract_v1.0.json",
+      "sha256": "7cfbe4cdff36f42774e892bbec88de0be723ffb0faf3e0a0f7b40381d055d565",
+      "size_bytes": 2703
+    },
+    {
+      "path": "spec/bkt_event.schema.json",
+      "sha256": "bcd92c9e8b29801784bb73f769be9dd8d5814cdf9f2e2276a03330c757a4bf93",
+      "size_bytes": 2793
+    },
+    {
+      "path": "spec/decision_envelope.schema.json",
+      "sha256": "5a62f70d8281182188d1cce7012914f31011e1ba55e5715afd1bc652cc1bb56a",
+      "size_bytes": 6660
+    },
+    {
+      "path": "spec/execution_state_manifest.schema.json",
+      "sha256": "827cfbc7ecc7c89d709178a242b5888f1244bbb2b44dc8bf6330320666e68753",
+      "size_bytes": 2979
+    },
+    {
+      "path": "spec/execution_state_manifest_v1.0.json",
+      "sha256": "beee112a601a8ed641b165ab29f07437353ce864fff555d96802cdc8a77c8c30",
+      "size_bytes": 8405
+    },
+    {
+      "path": "src/bioguard/__init__.py",
+      "sha256": "93a9616e5ea2fd2ec039949701c881be5ab95527edb1ef47c3c9275c2550a242",
+      "size_bytes": 116
+    },
+    {
+      "path": "src/bioguard/__main__.py",
+      "sha256": "3129adff95e0f38b87ab34cddfc27082c7892bcaec267ff5d40f160fdf55b44a",
+      "size_bytes": 61
+    },
+    {
+      "path": "src/bioguard/cli.py",
+      "sha256": "1488194f648d6dbe5177eeab1b113676c7f8df8954a43a4e020f9421a976d914",
+      "size_bytes": 18842
+    },
+    {
+      "path": "src/bioguard/config.py",
+      "sha256": "466d3009edb7553e88cfe06cdc6c24e239247744c164d121bba479dba947bfba",
+      "size_bytes": 1185
+    },
+    {
+      "path": "src/bioguard/core.py",
+      "sha256": "285169db1985d3e6959061a63792b93920c47c8dedfc66465ef0f4ccaab81e2b",
+      "size_bytes": 6511
+    },
+    {
+      "path": "src/bioguard/eval.py",
+      "sha256": "8f125f1ac63a75a74a1572e9abe958d756248df4b54ce6b9c9604f80842b385f",
+      "size_bytes": 36025
+    },
+    {
+      "path": "src/bioguard/orchestrator.py",
+      "sha256": "92e3e862a2457226ee0fa4cf841a0e73bb560591808aac30b7bc09c317c18fa4",
+      "size_bytes": 3726
+    },
+    {
+      "path": "src/bioguard/scoring.py",
+      "sha256": "07ad21f66a8f735addfd920a7654250227bfd3254a0d168e462a8a2208736067",
+      "size_bytes": 8286
+    },
+    {
+      "path": "src/bioguard/utils.py",
+      "sha256": "c7fbf91eceafd634f9403e8b7d0eb45eb3f9d2fe5eff95d38c3c5f89aacc5c24",
+      "size_bytes": 2797
+    }
+  ],
+  "submission_surface": "artifacts/submission_surface"
+}

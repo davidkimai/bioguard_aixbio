@@ -1,0 +1,42 @@
+{
+  "block": "bioguard-bkt-scoring",
+  "event": {
+    "auditable": true,
+    "composite_label": "allow",
+    "composite_score": 0.15,
+    "conversation_id": "skill-bkt-conv-001",
+    "depth": {
+      "label": "low",
+      "reason": "depth match ratio: 0.15",
+      "score": 0.15
+    },
+    "domain": "unknown",
+    "event_id": "e4cf35cb-0d46-d747-78bd-ef599b0177b3",
+    "model_trace": null,
+    "rationale": "Final decision allow due to low dimension in turn 0.",
+    "scope": {
+      "label": "low",
+      "reason": "scope match ratio: 0.15",
+      "score": 0.15
+    },
+    "source_span": {
+      "actor": "user",
+      "snippet_hashes": [
+        "sha256:e7c421b3583d688d12eb54709d6e89733ca6a67979ffd0bacb03b754f14efa8a"
+      ],
+      "turns": [
+        0
+      ]
+    },
+    "timestamp_utc": "2026-04-25T07:16:49Z",
+    "turn_index": 0,
+    "uncertainty": "med",
+    "uplift": {
+      "label": "low",
+      "reason": "uplift match ratio: 0.15",
+      "score": 0.15
+    },
+    "version": "bkt-v1.0"
+  },
+  "status": "ok"
+}

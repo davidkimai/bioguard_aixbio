@@ -1,0 +1,1 @@
+{"request_id": "not-a-uuid", "conversation_id": "c1", "turns": [{"actor": "user", "text": "hello", "index": 0}], "policy_profile": {"mode": "review", "threshold_allow": 0.45, "threshold_review": 0.75}, "host_id": "test", "contract_version": "bkt-v1.0"}

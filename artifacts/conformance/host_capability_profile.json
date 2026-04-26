@@ -1,0 +1,42 @@
+{
+  "profile_version": "1.0.0",
+  "host_id": "reference-host",
+  "contract_version": "bkt-v1.0",
+  "generated_utc": "2026-04-25T07:16:49Z",
+  "features": [
+    {
+      "feature_id": "pre_inference",
+      "status": "supported",
+      "notes": "Pre-inference BKT check runs on current turn plus 3 prior turns."
+    },
+    {
+      "feature_id": "post_inference",
+      "status": "supported",
+      "notes": "Post-inference BKT check runs after assistant response."
+    },
+    {
+      "feature_id": "skill_pack_install",
+      "status": "supported",
+      "notes": "SKILL.md profile loads and executes from repository path."
+    },
+    {
+      "feature_id": "schema_validation",
+      "status": "supported",
+      "notes": "decision_envelope schema validation enforced in proxy outputs."
+    },
+    {
+      "feature_id": "audit_export",
+      "status": "fallback",
+      "notes": "Audit export available as local file only; API export not native."
+    }
+  ],
+  "limits": {
+    "max_context_turns": 3,
+    "max_payload_chars": 12000
+  },
+  "validation": {
+    "decision_hash_supported": true,
+    "host_capability_profile": true,
+    "deviation_tracking": true
+  }
+}

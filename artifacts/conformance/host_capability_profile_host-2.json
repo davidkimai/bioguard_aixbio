@@ -1,0 +1,42 @@
+{
+  "profile_version": "1.1.0",
+  "host_id": "codex-host",
+  "contract_version": "bkt-v1.0",
+  "generated_utc": "2026-04-25T07:16:49Z",
+  "features": [
+    {
+      "feature_id": "pre_inference",
+      "status": "supported",
+      "notes": "Pre-inference BKT check is supported through standard skill invocation path."
+    },
+    {
+      "feature_id": "post_inference",
+      "status": "supported",
+      "notes": "Post-inference BKT check is supported; output mapping remains contract compliant."
+    },
+    {
+      "feature_id": "skill_pack_install",
+      "status": "supported",
+      "notes": "Skills directory import and execution works in smoke checks."
+    },
+    {
+      "feature_id": "schema_validation",
+      "status": "fallback",
+      "notes": "Validation is available via repo-side checks, not host-native enforcement."
+    },
+    {
+      "feature_id": "audit_export",
+      "status": "fallback",
+      "notes": "Decision traces are replayed locally with deterministic fixtures; native host export not exposed."
+    }
+  ],
+  "limits": {
+    "max_context_turns": 4,
+    "max_payload_chars": 16384
+  },
+  "validation": {
+    "decision_hash_supported": true,
+    "host_capability_profile": "artifacts/conformance/host_capability_profile_host-2.json",
+    "deviation_tracking": true
+  }
+}

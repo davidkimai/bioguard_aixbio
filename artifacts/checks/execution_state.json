@@ -1,0 +1,50 @@
+{
+  "completion_pct": 100.0,
+  "counts": {
+    "blocked": 0,
+    "done": 4,
+    "in_progress": 0,
+    "total": 4
+  },
+  "manifest_path": "/Users/jasontang/bioguard/spec/execution_state_manifest_v1.0.json",
+  "notes": [
+    "protocol-engine validated in automated pipeline",
+    "runtime and skill smoke artifacts refreshed",
+    "evaluation matrix and error taxonomy refreshed",
+    "submission report package refreshed",
+    "pipeline complete"
+  ],
+  "program_mode": "hybrid",
+  "status": "active",
+  "tasks": [
+    {
+      "open_items": [],
+      "role": "Workstream 1",
+      "status": "done",
+      "task_id": "protocol-engine",
+      "updated_at_utc": "2026-04-25T07:16:49Z"
+    },
+    {
+      "open_items": [],
+      "role": "Workstream 2",
+      "status": "done",
+      "task_id": "core-implementation",
+      "updated_at_utc": "2026-04-25T07:16:49Z"
+    },
+    {
+      "open_items": [],
+      "role": "Workstream 3",
+      "status": "done",
+      "task_id": "eval-engine",
+      "updated_at_utc": "2026-04-25T07:16:49Z"
+    },
+    {
+      "open_items": [],
+      "role": "Workstream 4",
+      "status": "done",
+      "task_id": "report-engine",
+      "updated_at_utc": "2026-04-25T07:16:49Z"
+    }
+  ],
+  "updated_at_utc": "2026-04-25T07:16:49Z"
+}

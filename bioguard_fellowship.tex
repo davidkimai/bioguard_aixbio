@@ -1,0 +1,252 @@
+\documentclass[10.5pt,a4paper]{article}
+
+\usepackage[top=0.85in,bottom=0.85in,left=0.9in,right=0.9in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\title{\textbf{BioGuard: A Conversation-Layer Biosecurity Protocol for AI-Powered Biological Design}\\[0.2em]\normalsize Research Fellowship Proposal}
+\author{Jason Tang}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+
+\section*{Abstract}
+
+Most biosecurity infrastructure still screens at synthesis order time and assumes risk is created at that point. Under realistic AI capability conditions, that assumption breaks down. Frontier models can already transfer actionable biological design knowledge to non-experts through conversation, so the live safety boundary is now the user--assistant exchange, not the downstream order form.
+
+This project proposes \textbf{BioGuard}, a portable, auditable control plane for conversation-layer biosecurity. It is protocol-first: detection logic is expressed as reusable \texttt{SKILL.md} blocks that instantiate a constrained BioGuard Skills Profile on top of the Agent Skills ecosystem \cite{agentskills2026,claude2026,githubclispec,copilot2026,openai2026}. BioGuard treats biological risk as a practical \textbf{knowledge transfer measurement} problem, operationalised by the \textbf{Biological Knowledge Transfer (BKT)} scoring contract and a composable runtime-agnostic pack.
+
+BioGuard will be grounded in a proof-of-concept reference implementation produced at the AIxBio Hackathon (April 2026). The research fellowship following the hackathon evaluates whether this protocol, centered on a shared BKT contract, detects dangerous biological knowledge transfer in multi-turn settings more reliably than stateless or sequence-first baselines. Its primary contribution is therefore an empirical protocol claim, not a general-purpose platform launch.
+
+The fellowship will deliver a protocol ecosystem with four primary outputs: (1) the BioGuard protocol specification plus a constrained BioGuard Skills Profile for Agent Skills hosts, (2) a stable BKT scoring contract, (3) an expanded BioSession benchmark and reproducible evaluation suite, and (4) a reference implementation with a conformance layer across at least three hosts. If the hypothesis is not fully confirmed, the fellowship will deliver a disciplined failure analysis that still sharpens operators’ decision boundaries and informs standards work.
+
+\section*{The Failure Mode}
+
+The target failure mode is \textbf{wrong-layer screening under AI capability conditions}. Synthesis providers---IBBIS commec, Twist, IDT, Genscript---screen for known sequence identity at the order boundary \cite{ibbis2024}. Those checks are necessary, but they are downstream and incomplete: if a sequence is novel, sequence identity screening does not capture intent, function, or the risk of knowledge transfer.
+
+The deeper problem is that screening at synthesis is late. RAND's December 2025 report reports frontier models providing detailed bio-design procedures under constrained contexts \cite{rand2025}. OpenAI's o3 scoring on SecureBio's Virology Capabilities Test indicates frontier systems can already perform highly specialised virology tasks \cite{securebio2025}. In those conditions, the dangerous transfer point is often the chat itself: a multi-turn interaction that accumulates a usable protocol without having produced any sequence or order request yet.
+
+Once that dynamic is understood, the checkpoint between user and bio-LLM becomes the critical failure boundary. Crescendo-style escalation, task decomposition, and analogical scaffolding attack patterns remain difficult for stateless per-turn classifiers \cite{crescendo2024}. BioGuard intervenes exactly in that gap through protocolized, context-aware screening.
+
+\section*{Why This Matters}
+
+Biosecurity now has a new gap: many high-volume biological workflows are now conversation-first. The AI design stack for research and prototyping has grown faster than its control layers. Most current safety components remain either downstream (synthesis screening) or model-bound (training-time policy and output filtering), leaving a missing protocol layer at the actual inference boundary.
+
+The earlier conversation layer is the object here. Dangerous biological knowledge transfer is context-dependent, accumulates across turns, and can be completed through multiple small, apparently benign prompts. The protocol thesis is therefore: the layer missing from existing stacks is not a smarter model alone, but a reusable control contract for that layer.
+
+There is also a protocol-layer argument worth naming. MCP and A2A demonstrate broad moves toward interoperable agent interfaces \cite{mcp2026,a2a2025}. In the same direction, Agent Skills is now an open format exposed across major runtimes (Claude Code, GitHub Copilot, Codex, Gemini CLI), enabling one screening contract to move across hosts \cite{agentskills2026,claude2026,githubclispec,copilot2026}. BioGuard builds directly in this ecosystem, making portability an architectural property instead of an afterthought.
+
+The biosecurity relevance is direct. A primitive that demonstrably improves detection of dangerous knowledge transfer in multi-turn conversations has immediate application to operators of bio-LLM interfaces: research labs, biotech companies, academic institutions, and any platform deploying foundation models with biological system prompts. A mixed or null result still produces a better map of where the mechanism holds, where it fails, and what the next study should examine. This is intentionally aligned to ERA/Cambridge's emphasis on decision-useful evidence, including explicit uncertainty and trade-offs.
+
+\section*{Core Thesis}
+
+The central claim is that \textbf{biosecurity at bio-LLM interfaces is improved by a portable conversation-layer protocol, and that BKT provides the practical scoring contract for measuring whether that protocol catches dangerous biological knowledge transfer better than current stateless controls}. The objective is protocol credibility through measurable evidence, not deployment breadth alone.
+
+The key move is to specify detection mechanics as a contract-first workflow. In BioGuard, that contract includes:
+\begin{itemize}[leftmargin=1.2em]
+  \item BKT event definition,
+  \item hazard scope scoring,
+  \item transfer depth scoring,
+  \item incremental knowledge uplift,
+  \item and operator-facing decision outputs.
+\end{itemize}
+
+The central primitive is the \textbf{BKT event}: a conversation turn where dangerous biological design knowledge transfers from model to user. Existing classifiers typically label general harmfulness; BKT is narrower, operationalisable, and more useful for operators who need actionable intervention points.
+
+The project therefore tests a protocol-level claim: can a standard scoring contract improve intervention reliability in multi-turn bio misuse attempts where single-turn or sequence-identity approaches fail?
+
+\section*{System Design}
+
+BioGuard is a \textbf{thin protocol layer} for biosecurity screening at bio-LLM interfaces, not a broad safety platform. The protocol contract is the object of study; runtimes and base models are interchangeable test environments.
+
+The operational packaging layer is a small family of reusable \textbf{BioGuard Skill Blocks}. These are composable \texttt{SKILL.md} modules with bundled instructions and optional scripts, aligned to an existing multi-runtime ecosystem \cite{agentskills2026,claude2026,githubclispec,openai2026}. BioGuard therefore does not propose a new skills standard; it defines a narrow \textbf{BioGuard Skills Profile} on top of the existing Agent Skills substrate. The blocks are independently importable and collectively composable, and the protocol surface is intentionally constrained to the smallest interoperable contract needed for exchange across hosts.
+
+\section*{Conformance Infrastructure}
+
+The long-lived value of the fellowship is a conformance layer that makes portability auditable. For each target host, the project defines:
+\begin{itemize}[leftmargin=1.2em]
+  \item a host capability profile,
+  \item a host deviation record against the protocol contract,
+  \item and a replay/evidence policy for unsupported features.
+\end{itemize}
+
+This layer is designed as a publishable artifact, not an afterthought.
+
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{bkt-scoring:} the shared detection contract---H/T/U rubric definitions, composite label thresholds, and calibration anchor examples. This block is the source of truth for the protocol; all other blocks implement it.
+  \item \textbf{bio-trace:} scores conversation turns for BKT events using a structured LLM judge. Accepts a turn plus up to three prior turns as context; returns H, T, U scores, composite label, domain tag, and one-sentence reasoning. Runs pre-inference (on user prompt) and post-inference (on model response).
+  \item \textbf{bio-seq:} a secondary module that scores extracted amino acid/DNA sequences with functional hazard models \cite{biolmtox2024}. Its role is complementary and tested via ablation.
+  \item \textbf{bio-guard:} the wrapper proxy block---wraps any bio-LLM API call with pre- and post-inference screening using bio-trace and bio-seq, returns a unified BioRiskScore, and appends every decision to an append-only audit log.
+\end{itemize}
+
+The benchmark surface is separate from the skills profile. \textbf{BioSession} is the adversarial benchmark corpus---500 annotated conversations per split across three adversary tiers (novice, capable non-expert, expert with automation), plus CBRN generalisation items. It ships as a separate \texttt{bioguard-benchmark} package and HuggingFace dataset rather than as a runtime skill block.
+
+These blocks operationalise BioGuard; they are not themselves the source of truth for the protocol. The protocol is the BKT contract and the BioRiskScore schema. The structure has three intentional effects: it catches dangerous intent before inference, flags dangerous outputs after it, and makes every screening decision legible to operators---flagged sequences plus a reasoning trace, not just a probability score.
+
+Two entry points expose the same BioGuard core. The researcher-facing surface is a Python library (\texttt{pip install bioguard}) and REST endpoint (\texttt{POST /v1/screen}) for evaluation and integration. The operator-facing surface is skill invocation for native runtime integration, telemetry export, and replay. Both invoke the same BKT contract.
+
+\section*{Research Questions}
+
+The project is organised around four linked questions. First, can a protocolized BKT contract improve detection of dangerous biological knowledge transfer on multi-turn Tier 2 attacks relative to stateless baselines (Llama Guard 3, keyword filter, GPT-5.4 zero-shot, pre-inference-only, post-inference-only)? Second, do pre-inference and post-inference BKT checks provide complementary signal? Third, can the protocol contract be implemented consistently across at least two additional hosts without changing its meaning? Fourth, is the BKT rubric reliable enough for reproducible community use (inter-rater agreement, annotation guidance, release-level reproducibility)?
+
+A longer-run systems question sits behind the fellowship scope: which parts of this mechanism are genuinely protocol-level and reusable, and which are artefacts of BioGuard as the first implementation? The protocol specification produced during the fellowship should answer this question by drawing the line explicitly.
+
+\section*{Intervention}
+
+The fellowship builds on a proof-of-concept reference implementation produced at the AIxBio Hackathon (April 24--26 2026). That sprint delivered a first-cut bkt-scoring block, bio-trace logic, a working reference BioSession corpus, and an initial evaluation on baseline comparison. The fellowship de-risks this into: protocol and contract hardening, benchmark expansion, host-portability, and a public empirical study.
+
+The fellowship proceeds in four directions:
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Protocol hardening:} finalize the BKT contract, scoring thresholds, audit schema, and a minimal interoperability surface for host adoption.
+  \item \textbf{Benchmarking:} harden the existing 500-annotated BioSession release, add expert adjudication, and continue tier-balance analysis for Tier 2/3 and CBRN transfers.
+  \item \textbf{Cross-host validation:} deploy BioGuard on at least three SKILL.md-enabled hosts drawn from major runtimes, publish a portability report, and quantify integration burden.
+  \item \textbf{Open-weight path (secondary):} evaluate a fine-tuned open-weights BioTrace model as a latency-cost alternative to GPT-5.4, but treat this as contingent on dataset quality and performance stability.
+  \item \textbf{Specification:} draft and publish the BioGuard protocol specification and BioGuard Skills Profile for the Cambridge Biosecurity Hub and CBAI ecosystem.
+\end{itemize}
+
+\section*{Study Design}
+
+The empirical work uses BioSession as the primary corpus. The main comparison is between the BioGuard composite intervention and baselines: Llama Guard 3 with no bio-domain prompting, a curated bio-hazard keyword filter, GPT-5.4 Nano zero-shot classification, pre-inference BioTrace alone, and post-inference BioTrace alone. Ablation conditions isolate bio-trace only, bio-seq only, and the composite BioRiskScore.
+
+Results are stratified by adversary tier. Primary focus is Tier 2 (capable non-expert, multi-turn decomposition), where stateless controls are expected to fail most. Tier 1 remains a sanity check, and Tier 3 probes upper-bound behavior where protocolization and sequence scoring are most challenged.
+
+The primary metric is recall at a fixed 5\% false positive rate, with bootstrap 95\% confidence intervals. Between-condition comparisons use McNemar's test. Cross-runtime portability is assessed through a shared integration protocol, deviation matrix, and structured friction rubric. Qualitative failure analysis categorises misses by granularity: turn-level, session-level, or rubric definition level.
+
+Success criteria are explicit:
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Success:} significant recall improvement over baselines on Tier 2 at controlled FPR, stable BKT rubric reliability, and reproducible cross-host packaging.
+  \item \textbf{Partial success:} improvement in one of recall, rubric reliability, or portability with transparent trade-off analysis.
+  \item \textbf{Informative failure:} no strict recall uplift but clear evidence on where multi-turn transfer escapes the contract, with a concrete revision to the protocol boundary.
+\end{itemize}
+
+\section*{Measures}
+
+The project treats BKT detection as a measurable phenomenon rather than a colloquial description of harm. Primary detection outcomes are:
+
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{Recall at 5\% FPR:} the primary metric across all conditions and tiers.
+  \item \textbf{Protocol utility gap:} whether BKT-based context-aware screening provides measurable uplift over stateless baselines.
+  \item \textbf{Tier-specific interaction:} whether BioGuard composite outperforms BioTrace alone on Tier 2 but not Tier 1, and BioSeq alone performs best on Tier 3.
+  \item \textbf{Interpretability:} operator survey---can a biosecurity practitioner act on the output without forensic investigation?
+\end{itemize}
+
+The protocol-level evaluation produces a second class of measures: cross-runtime deployment success, integration friction score (shared rubric), and protocol specification completeness against a checklist of required sections.
+
+\section*{Expected Contribution}
+
+The strongest contribution operates at three levels: conceptual, empirical, and infrastructural. Conceptually, it reframes biosecurity intervention at bio-LLM interfaces as protocol design + measurable BKT contracts. Empirically, it tests that contract under adversarial, multi-turn pressure with reusable benchmarking. In infrastructure, it delivers a protocol ecosystem with a conformance suite operators can use to compare host implementations.
+
+\section*{Feasibility}
+
+The project remains tractable by design. The goal is to close a single loop: protocol definition, reference implementation, benchmarking, and evidence. The strategy is to keep the protocol minimal and measurable, with optional components (BioSeq and open-weight fine-tuning) treated as extensions, not preconditions.
+
+The modular architecture reduces implementation risk: four concrete skill blocks plus one separate benchmark package are easier to build, test, and extend than a single monolithic platform. The AIxBio Hackathon proof-of-concept (April 2026) de-risks the core pipeline and shifts early fellowship work toward protocol consolidation and reproducibility.
+
+The fellowship timeline is well-matched to protocol-first execution: weeks one and two validate portability and baseline protocol behavior; weeks three through five strengthen the existing BioSession release and annotation quality; weeks six and seven test the optional open-weight model path; weeks eight and nine release the BioGuard protocol specification and BioGuard Skills Profile; week ten finalises dissemination. Each phase is a stable artifact even if one branch underperforms.
+
+\section*{Risks}
+
+The most immediate risk is that the BKT rubric does not generalise across decomposed Tier 2 attacks, where true transfer emerges only at session scope. If that happens, the result is still strong: it indicates where the contract boundary should shift from turn-level to session-level events and preserves publishable design lessons.
+
+A second risk is that BioTrace and BioSeq prove not to be informationally complementary. If the intent classifier catches everything the sequence scorer catches, the dual-layer architecture adds latency without adding detection capability. That is a useful negative result for practitioners, and it narrows the contribution to the intent classifier alone, which is still a deployable and citable artefact.
+
+A third risk is cross-runtime friction: SKILL.md implementations differ in subtle ways across runtimes (directory paths, frontmatter parsing, script execution environments), and full portability may require non-trivial adaptation for some runtimes. The mitigation is treating this friction as a research finding rather than a failure---documenting it systematically in the portability report and using it to drive BioGuard Skills Profile requirements.
+
+A fourth risk is fine-tuning underperformance: if BioSession 500 is too small or too imbalanced to train a reliable open-weights BioTrace classifier, the fine-tuning contribution weakens. The mitigation is maintaining GPT-5.4 as the fallback judge and publishing the training set regardless; the dataset itself remains a contribution even if fine-tuning fails to close the performance gap.
+
+A fifth risk is scope expansion once the protocol framing is established---the temptation to extend BioGuard to CBRN generalization, agentic pipeline monitoring, or regulatory interface design within the fellowship window. Fellowship scope will be treated as a hard constraint; CBRN generalization is explicitly noted as future work throughout the paper and specification.
+
+\section*{Outputs}
+
+By the end of the fellowship, the project aims to produce four durable outputs: a \textbf{BioGuard protocol specification and Skills Profile} describing the conversation-layer detection contract; an expanded \textbf{BioSession 500} benchmark with reproducibility metadata and inter-rater reliability artifacts; a validated \textbf{BioGuard reference implementation} plus a full conformance package across at least two additional hosts; and a \textbf{public empirical report} comparing BioGuard against baselines with explicit partial-success and informative-failure criteria.
+
+\section*{Conclusion}
+
+The project asks a narrow question with consequences beyond this fellowship: can a portable, protocolised conversation-layer contract improve operators' ability to catch dangerous biological knowledge transfer that synthesis-screening and generic harm controls miss? The evidence-first answer is the target.
+
+A positive result yields more than a classifier: it constitutes evidence for a reusable biosecurity primitive deployable at the AI-agent interface layer. Better biological safety may come less from stronger model training or more restrictive deployment policies and more from explicit, inspectable screening applied at the conversation layer---where the dangerous knowledge transfer actually happens. The biosecurity relevance is direct. A primitive that demonstrably improves detection of dangerous biological design intent in multi-turn conversations has immediate application to research labs, biotech companies, and any platform deploying foundation models with biological system prompts. An informative failure still produces a better map of where the mechanism holds, where it fails, and what the next study should examine---including whether the detection unit needs to shift from the turn to the session, and whether the BioGuard Skills Profile needs to mandate session-level context as a minimum requirement.
+
+The analogy remains: spam filters did not replace inbox security, but they moved defence upstream to the right boundary. BioGuard makes the same architectural move for biological design knowledge---an auditable checkpoint at the conversation layer, not a replacement for downstream safeguards.
+
+\section*{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{rand2025}
+RAND Corporation. December 2025.
+\textit{AI and Biosecurity: Frontier Model Uplift Assessment.}
+Santa Monica: RAND.
+
+\bibitem{securebio2025}
+SecureBio. April 2025.
+\textit{Virology Capabilities Test (VCT): Benchmarking Frontier AI on Virology Sub-Specialty Tasks.}
+\url{https://securebio.org/vct}
+
+\bibitem{crescendo2024}
+Russinovich, M., Salem, A., \& Eldan, R. 2024.
+\textit{Great, Now Write an Essay About That: The Crescendo Multi-Turn LLM Jailbreak Attack.}
+arXiv:2404.01833.
+
+\bibitem{biolmtox2024}
+Phuong, M., et al. April 2024.
+\textit{BioLMTox: Protein Toxicity Classification via ESM-2 Embeddings Independent of Sequence Identity.}
+bioRxiv.
+
+\bibitem{ibbis2024}
+IBBIS. 2024.
+\textit{Common Mechanism for DNA Synthesis Screening (commec).}
+\url{https://ibbis.bio/commec}
+
+\bibitem{agentskills2026}
+Agent Skills. 2026.
+\textit{The SKILL.md Open Standard for Reusable Agent Capabilities.}
+\url{https://agentskills.io}
+\bibitem{claude2026}
+Anthropic. 2026.
+\textit{Claude Code Skills.}
+\url{https://code.claude.com/docs/en/skills}
+\bibitem{githubclispec}
+GitHub. 2026.
+\textit{Manage agent skills with GitHub CLI.}
+\url{https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli/}
+\bibitem{copilot2026}
+GitHub. 2026.
+\textit{Add skills to cloud agents.}
+\url{https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills}
+\bibitem{openai2026}
+OpenAI. 2026.
+\textit{Codex and Agent Skills.}
+\url{https://openai.com/codex/}
+
+\bibitem{mcp2026}
+Model Context Protocol. 2026.
+\textit{Introduction.}
+\url{https://modelcontextprotocol.io/docs/getting-started/intro}
+
+\bibitem{a2a2025}
+Google Developers Blog. April 9, 2025.
+\textit{A2A: A new era of agent interoperability.}
+\url{https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/}
+
+\bibitem{nemogr2024}
+NVIDIA. 2024.
+\textit{NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications.}
+\url{https://github.com/NVIDIA/NeMo-Guardrails}
+
+\bibitem{era2026}
+ERA and Cambridge Biosecurity Hub. 2026.
+\textit{AIxBio Research Fellowship.}
+\url{https://aixbiosecurity.com}
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/bkt-event.json",
+  "title": "BKTEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "event_id",
+    "conversation_id",
+    "turn_index",
+    "scope",
+    "depth",
+    "uplift",
+    "composite_score",
+    "composite_label",
+    "source_span",
+    "domain",
+    "uncertainty",
+    "timestamp_utc",
+    "auditable"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "bkt-v1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "conversation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "turn_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scope": {
+      "$ref": "#/definitions/score_dimension"
+    },
+    "depth": {
+      "$ref": "#/definitions/score_dimension"
+    },
+    "uplift": {
+      "$ref": "#/definitions/score_dimension"
+    },
+    "composite_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "composite_label": {
+      "type": "string",
+      "enum": ["allow", "review", "block"]
+    },
+    "source_span": {
+      "type": "object",
+      "required": ["actor", "turns", "snippet_hashes"],
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "type": "string",
+          "enum": ["user", "assistant", "system"]
+        },
+        "turns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "snippet_hashes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["virology", "bacterial", "synthetic-biology", "toxicology", "unknown"]
+    },
+    "uncertainty": {
+      "type": "string",
+      "enum": ["low", "med", "high"]
+    },
+    "model_trace": {
+      "type": ["string", "null"]
+    },
+    "rationale": {
+      "type": "string",
+      "maxLength": 240
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "auditable": {
+      "type": "boolean"
+    }
+  },
+  "definitions": {
+    "score_dimension": {
+      "type": "object",
+      "required": ["score", "label", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "label": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 120
+        }
+      }
+    }
+  }
+}

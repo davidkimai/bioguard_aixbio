@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bioguard.example.com/spec/host_capability_profile.schema.json",
+  "title": "BioGuard Host Capability Profile",
+  "type": "object",
+  "required": [
+    "profile_version",
+    "host_id",
+    "contract_version",
+    "generated_utc",
+    "features",
+    "limits",
+    "validation"
+  ],
+  "properties": {
+    "profile_version": {
+      "type": "string"
+    },
+    "host_id": {
+      "type": "string",
+      "description": "Canonical host identifier (e.g., codex, claude-code, copilot, github-cli)."
+    },
+    "contract_version": {
+      "type": "string"
+    },
+    "generated_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "features": {
+      "type": "array",
+      "description": "Runtime capabilities declared by the host.",
+      "items": {
+        "type": "object",
+        "required": [
+          "feature_id",
+          "status",
+          "notes"
+        ],
+        "properties": {
+          "feature_id": {
+            "type": "string",
+            "enum": [
+              "pre_inference",
+              "post_inference",
+              "skill_pack_install",
+              "schema_validation",
+              "audit_export"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["supported", "fallback", "unsupported"]
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "limits": {
+      "type": "object",
+      "description": "Runtime constraints affecting reproducibility.",
+      "required": ["max_context_turns", "max_payload_chars"],
+      "properties": {
+        "max_context_turns": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_payload_chars": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "required": ["decision_hash_supported", "host_capability_profile", "deviation_tracking"],
+      "properties": {
+        "decision_hash_supported": {
+          "type": "boolean"
+        },
+        "host_capability_profile": {
+          "type": "string"
+        },
+        "deviation_tracking": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

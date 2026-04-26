@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bioguard.example.com/spec/deviation_matrix.schema.json",
+  "title": "BioGuard Host Conformance Deviation Matrix",
+  "type": "object",
+  "required": [
+    "matrix_version",
+    "generated_utc",
+    "contract_version",
+    "rows"
+  ],
+  "properties": {
+    "matrix_version": {
+      "type": "string"
+    },
+    "generated_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "contract_version": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "host_id",
+          "requirement_id",
+          "status",
+          "trace_id",
+          "evidence_path"
+        ],
+        "properties": {
+          "host_id": {
+            "type": "string"
+          },
+          "requirement_id": {
+            "type": "string",
+            "description": "Requirement from spec and/or manifest."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PASS", "FALLBACK", "MISSING", "RESTRICTED"]
+          },
+          "trace_id": {
+            "type": "string"
+          },
+          "evidence_path": {
+            "type": "string",
+            "description": "Path to decision trace or log proving status."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Workstream or responsible party for this requirement."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why this status is not PASS."
+          },
+          "decision_consequence": {
+            "type": "string",
+            "description": "Operator consequence until remediation: accepted, limited-use, or blocked."
+          },
+          "remediation_plan": {
+            "type": "string",
+            "description": "Concrete mitigation or next step for this row."
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

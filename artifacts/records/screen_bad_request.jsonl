@@ -1,0 +1,1 @@
+{"request_id": "", "result": {"detail": "missing_fields=request_id,conversation_id,turns,policy_profile,host_id,turns_nonempty", "instance": "/v1/screen", "status": 400, "title": "Invalid request payload", "type": "https://bioguard.invalid/request"}, "status": 400, "ts_utc": "2026-04-25T07:16:48Z"}

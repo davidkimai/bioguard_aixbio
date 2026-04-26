@@ -1,0 +1,25 @@
+host_id,requirement_id,status,trace_id,evidence_path,notes,owner,reason,decision_consequence,remediation_plan
+reference-host,spec_bkt_contract_validation,PASS,trace-r1,artifacts/checks/protocol_lock.json,Contract fields and labels are parseable,,,,
+reference-host,api_contract_validation,PASS,trace-r2,artifacts/records/seed_screen.jsonl,POST /screen returns expected status on valid and invalid payloads,,,,
+reference-host,pre_inference,PASS,trace-r3,artifacts/records/skill_bio_trace.json,Pre-inference check runs over user turns and recent context,,,,
+reference-host,post_inference,PASS,trace-r4,artifacts/records/skill_bio_trace.json,Post-inference check runs over assistant turns and recent context,,,,
+reference-host,schema_validation,PASS,trace-r5,artifacts/checks/protocol_lock.json,Decision schema checks pass for default profile,,,,
+reference-host,audit_hash_replay_supported,FALLBACK,trace-r6,artifacts/metrics/reproducibility.md,"Replay is deterministic with seed and manifest; remote export remains unavailable.",core-implementation,Host-native remote export is not exposed in this run,accepted,Document a bounded replay contract and add host-specific export hooks in the next host-integration iteration.
+reference-host,deviation_tracking,PASS,trace-r7,artifacts/conformance/deviation_matrix.json,Deviation matrix captures host feature deltas,,,,
+reference-host,skill_pack_install,PASS,trace-r8,artifacts/records/skill_bio_guard.json,Skill pack import and invocation smoke tested,,,,
+codex-host,spec_bkt_contract_validation,PASS,trace-c1,artifacts/conformance/host_capability_profile_host-2.json,Contract schema and event fields validated by proxy smoke,,,,
+codex-host,api_contract_validation,PASS,trace-c2,artifacts/conformance/host_capability_profile_host-2.json,Decision payload shape remains consistent in dry-run checks,,,,
+codex-host,pre_inference,PASS,trace-c3,artifacts/conformance/host_capability_profile_host-2.json,Pre-inference path supported with short-turn context,,,,
+codex-host,post_inference,PASS,trace-c4,artifacts/conformance/host_capability_profile_host-2.json,Post-inference path supported with same decision envelope schema,,,,
+codex-host,schema_validation,FALLBACK,trace-c5,artifacts/conformance/host_capability_profile_host-2.json,Optional local validation path exists; host-level schema checker not guaranteed,protocol-engine,No native validator exposed in this probe,accepted,Expose host-native schema checks and log validation failures for at-rest traces.
+codex-host,audit_hash_replay_supported,FALLBACK,trace-c6,artifacts/conformance/host_capability_profile_host-2.json,"Deterministic replay is supported; host-native trace export is not native",core-implementation,Export API is probe-local only,accepted,Attach replay artifact path as explicit host metadata in subsequent compatibility captures.
+codex-host,deviation_tracking,PASS,trace-c7,artifacts/conformance/deviation_matrix.json,Host-specific deviation notes populated,,,,
+codex-host,skill_pack_install,PASS,trace-c8,artifacts/conformance/host_capability_profile_host-2.json,Skills folder path install smoke executed,,,,
+github-copilot-host,spec_bkt_contract_validation,PASS,trace-g1,artifacts/conformance/host_capability_profile_host-3.json,Contract fields validated against baseline checks,,,,
+github-copilot-host,api_contract_validation,PASS,trace-g2,artifacts/conformance/host_capability_profile_host-3.json,Screen status transitions and required fields are present,,,,
+github-copilot-host,pre_inference,PASS,trace-g3,artifacts/conformance/host_capability_profile_host-3.json,Pre-inference path supported in compatibility probe,,,,
+github-copilot-host,post_inference,FALLBACK,trace-g4,artifacts/conformance/host_capability_profile_host-3.json,Post-inference currently relies on explicit fallback scoring,core-implementation,Manual scoring path was needed to collect comparable traces in this probe,monitor,Complete native post-inference path or formally mark this host as partial-deployment only.
+github-copilot-host,schema_validation,RESTRICTED,trace-g5,artifacts/conformance/host_capability_profile_host-3.json,"Host-native schema enforcement was not exposed in this probe",protocol-engine,Current host surface does not expose a policy-safe schema validation endpoint,repair,Publish schema enforcement fallback in host docs and add explicit warning if host validation is absent.
+github-copilot-host,audit_hash_replay_supported,FALLBACK,trace-g6,artifacts/conformance/host_capability_profile_host-3.json,Replay uses seeded fixture path; native export not yet exposed,core-implementation,No native export endpoint for replay bundles on this host,accepted,Limit deployment guidance to seeded replay or equivalent deterministic fixture exports.
+github-copilot-host,deviation_tracking,PASS,trace-g7,artifacts/conformance/deviation_matrix.json,Host-specific deviation notes populated,,,,
+github-copilot-host,skill_pack_install,PASS,trace-g8,artifacts/conformance/host_capability_profile_host-3.json,Skills install smoke passed,,,,
