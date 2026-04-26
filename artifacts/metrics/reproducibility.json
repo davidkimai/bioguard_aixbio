@@ -2,7 +2,6 @@
   "baselines": [
     "bioguard",
     "keyword-filter",
-    "llama-guard-3",
     "gpt54-zero-shot",
     "pre-inference-only",
     "post-inference-only"
@@ -30,7 +29,7 @@
       "split": "test"
     }
   ],
-  "generated_at_utc": "2026-04-26T20:54:19Z",
+  "generated_at_utc": "2026-04-26T23:45:37Z",
   "manifest_path": "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/benchmark_manifest_v1.0.json",
   "manifest_sha256": "2eba4f4f847c531765478110ce8b6251918ea86a7e4ec62d9c142baa27fabf4e",
   "manifest_version": "1.0",
