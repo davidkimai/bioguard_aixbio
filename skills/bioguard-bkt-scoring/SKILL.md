@@ -1,71 +1,60 @@
 ---
 name: bioguard-bkt-scoring
-description: Use when a host needs a single context-to-context event score from one prompt fragment using the BioGuard Biological Knowledge Transfer (BKT) contract.
+description: Scores one text fragment as a BioGuard Biological Knowledge Transfer event. Use when a host needs scope, depth, uplift, and rationale for a single conversation turn or extracted span.
 license: Apache-2.0
 version: 1.0.0
+compatibility: Agent Skills-compatible hosts with Python 3.11 and repo access.
 ---
 
-# BioGuard BKT Scoring (Protocol Kernel)
+# BioGuard BKT Scoring
 
-This skill is the canonical event-scoring adapter for the BioGuard protocol.
-It converts one text fragment into one BKT event object that is compatible with
-`spec/bkt_event.schema.json`.
+## Purpose
 
-## Use this skill when
+Use this skill to turn one text fragment into one BKT event. It is the smallest BioGuard unit. It does not make the final policy decision.
 
-- you need a BKT event from a single user or assistant turn
-- you need contract-consistent `scope`, `depth`, and `uplift` scoring
-- you are calibrating host portability against the canonical BKT contract
-
-Do not use this as a policy decision layer. It only provides one event-level
-signal.
-
-## Input
+## Inputs
 
 Provide JSON with:
 
-- `text`
-- optional `actor`
-- optional `turn_index`
-- optional `conversation_id`
-- optional `policy_profile`
+- `text`: required string
+- `actor`: optional, defaults to `user`
+- `turn_index`: optional integer
+- `conversation_id`: optional string
+- `policy_profile`: optional object
 
-If `policy_profile` is absent, the host uses conservative defaults. If `text` is
-missing or blank, the skill returns `{"status":"error"}`.
+## Workflow
+
+1. Read the input JSON.
+2. Score the text for BKT scope, depth, and uplift.
+3. Return one event compatible with `spec/bkt_event.schema.json`.
+4. Leave final aggregation to `bioguard-bio-guard`.
 
 ## Output
 
-Returns JSON with:
+Returns:
 
 - `status`: `ok` or `error`
-- `block`: event block id and contract provenance
-- `event`: canonical BKT event object compatible with `spec/bkt_event.schema.json`
-- `decision_hash` is not returned by this block; it is added by the guard block.
+- `block`: skill and contract provenance
+- `event`: canonical BKT event
 
-## Invocation
+The output should not include a final `decision_hash`; that belongs to the guard skill.
 
-```bash
-python3 scripts/bioguard_skill_proxy.py --mode bkt-scoring
-```
-
-Expected behavior:
+## Smoke Test
 
 ```bash
-python3 scripts/bioguard_skill_proxy.py \
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py \
   --mode bkt-scoring \
   --input artifacts/requests/skill_bkt_request.json
 ```
 
-Returns one event payload so host replay is deterministic.
+Expected result: one `ok` payload with an `event` object.
 
-## Validation
+## Failure Behavior
 
-- Verify with: `python3 -m bioguard check`
-- Execute smoke test after any contract change
-- Keep the `event` schema stable for cross-host portability
+- Missing or blank `text` returns `status: error`.
+- Invalid JSON returns a typed tool error.
+- Contract changes require `PYTHONPATH=src python3 -m bioguard check`.
 
-## Notes
+## Safety Notes
 
-- This skill is the smallest portable unit of the protocol.
-- It does not own session aggregation or final operator action.
-- Final policy decisions belong to `bioguard-bio-guard`.
+Keep rationales short. Explain why a fragment was risky without adding new biological instructions.

@@ -6,13 +6,14 @@
     "in_progress": 0,
     "total": 4
   },
-  "manifest_path": "/Users/jasontang/bioguard/spec/execution_state_manifest_v1.0.json",
+  "manifest_path": "spec/execution_state_manifest_v1.0.json",
   "notes": [
     "protocol-engine validated in automated pipeline",
     "runtime and skill smoke artifacts refreshed",
     "evaluation matrix and error taxonomy refreshed",
     "submission report package refreshed",
-    "pipeline complete"
+    "pipeline complete",
+    "publication cleanup: public repo surface refreshed"
   ],
   "program_mode": "hybrid",
   "status": "active",
@@ -46,5 +47,5 @@
       "updated_at_utc": "2026-04-25T07:16:49Z"
     }
   ],
-  "updated_at_utc": "2026-04-25T07:16:49Z"
+  "updated_at_utc": "2026-04-26T20:13:52Z"
 }

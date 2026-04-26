@@ -24221,32 +24221,32 @@
       "pre-inference-only",
       "post-inference-only"
     ],
-    "command": "python -m bioguard evaluate --manifest /Users/jasontang/bioguard/spec/benchmark_manifest_v1.0.json --splits test --out /Users/jasontang/bioguard/artifacts/metrics --seed 1 --include-ablations",
+    "command": "python -m bioguard evaluate --manifest /Users/jasontang/bioguard_aixbio/spec/benchmark_manifest_v1.0.json --splits test --out /Users/jasontang/bioguard_aixbio/artifacts/metrics --seed 1 --include-ablations",
     "contract_sha256": "7cfbe4cdff36f42774e892bbec88de0be723ffb0faf3e0a0f7b40381d055d565",
     "contract_version": "bkt-v1.0",
     "dataset_files": [
       {
         "num_items": 500,
-        "path": "/Users/jasontang/bioguard/artifacts/data/biosession-500-train.jsonl",
+        "path": "artifacts/data/biosession-500-train.jsonl",
         "sha256": "185d130e10ad9957d0c9a87ffcc314971eaec8a4a5b09633f2f20d16d07ab92c",
         "split": "train"
       },
       {
         "num_items": 500,
-        "path": "/Users/jasontang/bioguard/artifacts/data/biosession-500-dev.jsonl",
+        "path": "artifacts/data/biosession-500-dev.jsonl",
         "sha256": "83756db0aa1b184ae8823e578b256d451a9e4a5d8b2fad3cdad7a726a91d2e34",
         "split": "dev"
       },
       {
         "num_items": 500,
-        "path": "/Users/jasontang/bioguard/artifacts/data/biosession-500-test.jsonl",
+        "path": "artifacts/data/biosession-500-test.jsonl",
         "sha256": "6539f7e194f6be218973ce7e2fc36c27dc7adf0ad7cc6b306f32ba3389407f59",
         "split": "test"
       }
     ],
-    "generated_at_utc": "2026-04-26T19:31:53Z",
-    "manifest_path": "/Users/jasontang/bioguard/spec/benchmark_manifest_v1.0.json",
-    "manifest_sha256": "7fbce9c6bf4f6ccfc3a7f20cb3c2ffeeccbc5921c56e6737c944f5a32bb3c702",
+    "generated_at_utc": "2026-04-26T20:13:52Z",
+    "manifest_path": "/Users/jasontang/bioguard_aixbio/spec/benchmark_manifest_v1.0.json",
+    "manifest_sha256": "2eba4f4f847c531765478110ce8b6251918ea86a7e4ec62d9c142baa27fabf4e",
     "manifest_version": "1.0",
     "seed": 1,
     "splits": [

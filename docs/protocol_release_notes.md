@@ -7,6 +7,22 @@ Current release:
 - `benchmark_manifest_v1.0`
 - `execution_state_manifest_v1.0`
 
+### Release note v1.3 (2026-04-27)
+
+Summary:
+- Rewrote the public paper and docs in plainer workshop-reviewer language.
+- Moved duplicate generated submission bundles and older narrative drafts out of the public repo.
+- Kept the repository focused on paper, runtime, specs, skills, and reproducibility evidence.
+- Updated skill docs to follow current Agent Skills practice: specific triggers, one job per skill, smoke commands, and explicit failure behavior.
+
+Archived outside repo:
+- `/Users/jasontang/bioguard_aixbio_archive/20260427-publication-cleanup/`
+
+Backward compatibility:
+- No contract version change.
+- No schema migration.
+- Generated code-only bundles can still be recreated with `scripts/build_submission_surface.py`.
+
 ### Release note v1.1 (2026-04-23)
 
 Summary:
@@ -22,13 +38,13 @@ State-diff corrections applied in this draft:
 - Internal state-tracking surfaces now use `execution_state` naming by default.
 - Fellowship and hackathon narratives now describe BioSession as a benchmark package rather than a runtime skill.
 
-No backward-incompatible schema migrations in this release; implementation remains a v0.1 reference runtime while the submission target has moved to ambitious-winning state.
+No backward-incompatible schema migrations in this release; implementation remains a v0.1 reference runtime while the submission target moved toward a stronger public evidence package.
 
 ### Release note v1.2 (2026-04-23)
 
 Summary:
 - Added winner-oriented execution criteria for informative-failure states across hackathon docs.
-- Added explicit judge-facing closure checks in `Execution_Gates.md` and `AIxBio_Hackathon_Execution_Package.md`.
+- Added explicit closure checks in the execution-gate and AIxBio planning drafts that are now archived outside the public repo.
 - Added explicit protocol-revision mapping to `artifacts/docs/report_draft.md`.
 - Updated `Operational_Runbook.md` with Gate-6 and mandatory revision-hypothesis outputs.
 

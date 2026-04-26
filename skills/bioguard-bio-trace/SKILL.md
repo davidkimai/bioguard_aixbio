@@ -1,61 +1,63 @@
 ---
 name: bioguard-bio-trace
-description: Context-aware BKT tracing for BioGuard. Use when screening a conversation window for dangerous biological knowledge transfer before or after model inference.
+description: Screens a BioGuard conversation window for dangerous biological knowledge transfer. Use for pre-inference or post-inference tracing when the host needs BKT events and a contract-aligned decision envelope.
+license: Apache-2.0
+version: 1.0.0
+compatibility: Agent Skills-compatible hosts with Python 3.11 and repo access.
 ---
 
 # BioGuard Bio Trace
 
-This skill screens a conversation window for BKT events before and after inference.
-It returns a contract-aligned decision envelope that follows
-`spec/decision_envelope.schema.json`.
+## Purpose
 
-## Use this skill when
+Use this skill when the important object is the conversation window, not one isolated fragment. It detects BKT events across turns and returns the canonical BioGuard screen output.
 
-- you need pre-inference screening on the incoming user prompt
-- you need post-inference screening on a model response
-- you need a portable `SKILL.md` entrypoint that matches the BioGuard `/v1/screen` contract
+## Inputs
 
-## Input
+Provide the same payload used by `/v1/screen`:
 
-Provide a BioGuard screen payload with:
+- `request_id`: UUID
+- `conversation_id`: string
+- `turns`: list of `{actor, text, index}`
+- `policy_profile`: mode and thresholds
+- `host_id`: host label
+- `contract_version`: optional, defaults to the current contract
 
-- `request_id`
-- `conversation_id`
-- `turns`
-- `policy_profile`
-- `host_id`
-- `contract_version`
+## Workflow
+
+1. Validate the request shape.
+2. Validate the contract version.
+3. Score non-empty turns for BKT events.
+4. Return a decision envelope compatible with `spec/decision_envelope.schema.json`.
 
 ## Output
 
-Returns the canonical screen fields used by this project:
+Returns the canonical screen fields:
 
-- `request_id`
-- `conversation_id`
-- `request_ts_utc`
-- `generated_at_utc`
-- `model_id`
-- `policy_profile`
-- `decision`
-- `decision_reason`
-- `bkt_events`
-- `host_context`
-- optional `sequence_findings`
-- optional `decision_hash`
+- request and conversation identifiers
+- policy profile
+- decision and decision reason
+- BKT events
+- host context
+- optional sequence findings
+- decision hash
 
-## Invocation
+## Smoke Test
 
 ```bash
-python3 scripts/bioguard_skill_proxy.py --mode bio-trace --input artifacts/requests/seed_request.json
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py \
+  --mode bio-trace \
+  --input artifacts/requests/seed_request.json
 ```
 
-## Error and safe fallback
+Expected result: one decision envelope with at least one `bkt_events` entry for the seeded request.
 
-- If all turns are blank, this returns a typed invalid-request response.
-- If contract validation fails, execution returns a typed failure record with `type`,
-  `title`, and `detail`.
+## Failure Behavior
 
-## Notes
+- Empty or malformed turns return a typed invalid-request record.
+- Unsupported contract versions return a typed unsupported-contract record.
+- Schema or contract edits require `PYTHONPATH=src python3 -m bioguard check`.
 
-- This is the main measurement surface for the protocol thesis.
-- It is the primary skill used for one-host hackathon validation.
+## Safety Notes
+
+Do not expand risky biological content in rationales. Preserve enough context for audit, but keep public traces defensive and minimal.

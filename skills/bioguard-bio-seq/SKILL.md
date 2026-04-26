@@ -1,47 +1,64 @@
 ---
 name: bioguard-bio-seq
-description: Optional sequence-oriented extension for BioGuard. Use only for ablation or future extensions where extracted DNA or amino acid content needs a secondary risk pass.
+description: Optional BioGuard sequence-risk extension. Use only when extracted DNA or amino-acid-like content needs a secondary pass for ablation, future validation, or explicit sequence-safety review.
+license: Apache-2.0
+version: 1.0.0
+compatibility: Agent Skills-compatible hosts with Python 3.11 and repo access.
 ---
 
 # BioGuard Bio Seq
 
-This skill is an optional extension module for sequence-based signals.
+## Purpose
 
-## Use this skill when
+Use this skill only as a secondary check. BioGuard's main claim is conversation-level screening; this skill is for sequence-like content that has already been extracted and approved for review.
 
-- sequence-like content has already been extracted from a conversation
-- you test whether sequence-oriented scoring adds signal beyond BioTrace
-- you run ablation studies for fellowship-scale validation
-
-## Input
+## Inputs
 
 Provide JSON with:
 
-- `sequence`
-- optional metadata describing source conversation or turn
+- `sequence`: DNA, RNA, or amino-acid-like string
+- optional source metadata, such as `conversation_id` or `turn_index`
+
+## Workflow
+
+1. Check whether a sequence was provided.
+2. Hash the sequence instead of echoing it when possible.
+3. Return sequence findings for ablation or future validation.
+4. Do not override the main BioGuard conversation decision by default.
 
 ## Output
 
+Returns:
+
 - `status`: `skip`, `ok`, or `error`
 - `block`: `bioguard-bio-seq`
-- `sequence_hash`: SHA-256 fingerprint of the submitted sequence
+- `sequence_hash`
 - optional `sequence_findings`
 - `risk_profile`
-- optional `notes`
+- optional notes
 
-When no sequence is provided, this block returns:
+If no sequence is provided, return:
 
 ```json
 {"status":"skip","reason":"no_sequence"}
 ```
 
-## Invocation
+## Smoke Test
 
 ```bash
-python3 scripts/bioguard_skill_proxy.py --mode bio-seq --input artifacts/requests/skill_bio_seq_request.json
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py \
+  --mode bio-seq \
+  --input artifacts/requests/skill_bio_seq_request.json
 ```
 
-## Notes
+Expected result: either an `ok` payload with hashed sequence metadata or a clear `skip` result.
 
-- This module is optional and secondary to the protocol thesis.
-- The hackathon submission should remain valid without this block succeeding.
+## Failure Behavior
+
+- Missing sequence is not a hard failure; it is a `skip`.
+- Invalid JSON returns a typed error.
+- Public outputs should prefer hashes and summaries over raw sequence content.
+
+## Safety Notes
+
+Do not publish raw high-risk sequences or operational biological instructions from this skill without separate review.

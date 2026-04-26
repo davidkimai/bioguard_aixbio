@@ -1,206 +1,139 @@
 # BioGuard Operational Runbook
 
-## Purpose
+This runbook gives the minimum commands needed to check the repo, run the screen path, test the skills, and reproduce the main benchmark artifacts.
 
-The runbook is the canonical execution layer for an ambitious hackathon submission and direct fellowship continuation. It assumes `spec/*` files are source of truth and that all changes stay within the documented artifact contracts.
+Run all commands from the repository root.
 
-## 0) Inputs
+## Requirements
 
-```text
-PYTHON_VERSION >= 3.11
-PYTHONPATH includes ./src
-CONTRACT_VERSION == bkt-v1.0
+- Python 3.11 or newer
+- `PYTHONPATH=src`
+- contract version `bkt-v1.0`
+
+No external model API is required for the included deterministic smoke path.
+
+## 1. Contract Check
+
+```bash
+PYTHONPATH=src python3 -m bioguard check
 ```
 
-Required files:
+Expected output:
 
-- `spec/bkt_contract_v1.0.json`
-- `spec/bkt_event.schema.json`
-- `spec/benchmark_manifest.schema.json`
-- `spec/benchmark_manifest_v1.0.json`
-- `spec/decision_envelope.schema.json`
-- `spec/bioguard_api.openapi.yaml`
-- `docs/BKT_Rubric_Draft.md`
+- `artifacts/checks/protocol_lock.json`
 
-## 1) Setup
+Pass condition:
 
-1. Set working directory to `/Users/jasontang/bioguard`.
-2. Run `make init` to create standard artifact directories and seed fixtures.
-3. Confirm no unintended edits in `spec/*` and `docs/*` before freeze.
+- required spec files parse,
+- benchmark manifest is readable,
+- no hard schema or file-presence failure is reported.
 
-## 2) Evidence Path (Hackathon Winning-State Target)
+## 2. Screen Smoke Test
 
-1. **Gate-0 Spec Gate:** `python -m bioguard check`
-2. **Gate-1 Screen Gate:** `python -m bioguard screen --request artifacts/requests/seed_request.json --out artifacts/records/seed_screen.jsonl`
-3. **Gate-1b Failure Gate:** `python -m bioguard screen --request artifacts/requests/bad_request.json --out artifacts/records/screen_bad_request.jsonl` and  
-   `python -m bioguard screen --request artifacts/requests/bad_contract.json --out artifacts/records/screen_bad_contract.jsonl`
-4. **Gate-1c Skill Gate:** `make skills`
-5. **Gate-2 Evaluation Gate:** `python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --splits test --seed 1 --out artifacts/metrics`
-6. **Gate-3 Submission Gate:** `make submission-surface` and `make evidence` (requires Gate-0/1/2 evidence files complete)
-7. **Gate-4 Portability Gate:** host-2 and host-3 parity or compatibility artifacts plus deviation notes
-8. **Gate-5 Demo Gate:** operator replay path and concise demo script/video outline
-9. **Gate-6 Informative-Failure Closure Gate:** explicit revision hypotheses required when outcome is not success.
+```bash
+PYTHONPATH=src python3 -m bioguard screen \
+  --request artifacts/requests/seed_request.json \
+  --out artifacts/records/seed_screen.jsonl
+```
 
-Gate pass definition:
+Expected output:
 
-- Gate-0 writes `artifacts/checks/protocol_lock.json` with at least soft warnings and zero hard failures.
-- Gate-1 writes deterministic good/malformed request traces under `artifacts/records/`.
-- Gate-1c writes deterministic skill smoke outputs under `artifacts/records/skill_*.json`.
-- Gate-2 writes `artifacts/metrics/results.json`, `artifacts/metrics/outcome.json`, `artifacts/metrics/case_summary.json`, and `artifacts/metrics/error_taxonomy.md`.
-- Gate-3 writes `artifacts/evidence/bundle_manifest.json` and `artifacts/evidence/report_index.json` for reporting.
-- Gate-3 also emits `artifacts/submission_surface/` via `make submission-surface` (docs excluded).
-- Gate-4 writes host portability notes and conformance/deviation outputs.
-- Gate-5 yields a replayable operator workflow plus demo narrative.
-- Gate-6 requires three revision hypotheses in report (tier coverage, threshold calibration, fallback handling) if outcome is informative_failure.
+- `artifacts/records/seed_screen.jsonl`
 
-## 3) Contract Validation Gate
+The output should include a decision, request identifiers, BKT events, host context, and a decision hash.
 
-Command:
-- `python -m bioguard check`
+## 3. Failure-Path Checks
 
-Expected:
-- `artifacts/checks/protocol_lock.json` with `"status": "ok"` or `"status": "warn"` when optional tooling is unavailable.
-- `check` exits non-zero for hard failures (missing required files, schema parse errors, schema violations).
+```bash
+PYTHONPATH=src python3 -m bioguard screen \
+  --request artifacts/requests/bad_request.json \
+  --out artifacts/records/screen_bad_request.jsonl
 
-Pass criteria:
-- All listed schema files parse.
-- Manifest validates vs `benchmark_manifest.schema.json`.
-- `protocol_lock.json` includes valid parse state for both contract and execution-state manifest.
+PYTHONPATH=src python3 -m bioguard screen \
+  --request artifacts/requests/bad_contract.json \
+  --out artifacts/records/screen_bad_contract.jsonl
+```
 
-## 4) Screen Smoke Gate
+Expected behavior:
 
-1. Run seeded screen:
-   - `python -m bioguard screen --request artifacts/requests/seed_request.json --out artifacts/records/seed_screen.jsonl`
-2. Capture malformed case:
-   - `python -m bioguard screen --request artifacts/requests/bad_request.json --out artifacts/records/screen_bad_request.jsonl`
-   - `python -m bioguard screen --request artifacts/requests/bad_contract.json --out artifacts/records/screen_bad_contract.jsonl`
+- malformed requests return typed error records,
+- contract mismatch returns a typed unsupported-contract record.
 
-Pass criteria:
-- Deterministic output on repeat runs with no environment changes.
-- Every entry in `seed_screen.jsonl` includes:
-  - `decision`
-  - `request_id`
-  - `conversation_id`
-  - `bkt_events[0].composite_label`
-  - `host_context`
+## 4. Skill Smoke Tests
 
-## 5) Evaluation Gate
+```bash
+make skills
+```
 
-Run:
-- `make eval`
+Expected outputs:
 
-Produces:
+- `artifacts/records/skill_bkt_scoring.json`
+- `artifacts/records/skill_bio_trace.json`
+- `artifacts/records/skill_bio_guard.json`
+- `artifacts/records/skill_bio_seq.json`
+
+Pass condition:
+
+- each skill runs through `scripts/bioguard_skill_proxy.py`,
+- the main guard and trace skills return the canonical decision path,
+- the optional sequence skill either returns findings or an explicit skip result.
+
+## 5. Benchmark Evaluation
+
+```bash
+PYTHONPATH=src python3 -m bioguard evaluate \
+  --manifest spec/benchmark_manifest_v1.0.json \
+  --splits test \
+  --seed 1 \
+  --out artifacts/metrics \
+  --include-ablations
+```
+
+Expected outputs:
+
 - `artifacts/metrics/results.json`
-- `artifacts/metrics/bootstrap.csv`
-- `artifacts/metrics/confusion_matrix.csv`
 - `artifacts/metrics/hackathon_results.md`
+- `artifacts/metrics/ablation_results.md`
+- `artifacts/metrics/confusion_matrix.csv`
+- `artifacts/metrics/bootstrap.csv`
+- `artifacts/metrics/error_taxonomy.md`
+- `artifacts/metrics/reproducibility.md`
 
-Pass criteria:
-- Baseline matrix includes `bioguard`, `keyword-filter`, `llama-guard-3`, `gpt54-zero-shot`, `pre-inference-only`, and `post-inference-only`.
-- `artifacts/metrics/hackathon_results.md` is produced as the primary comparison table.
-- `artifacts/metrics/ablation_results.md` is produced for pre/post checks.
-- Includes `recall_at_fpr_5`, `ci95_low`, `ci95_high`, and `significant_vs_baseline`.
-- One or more split rows are present (default `test`).
-- `artifacts/metrics/outcome.json` exists with `status` in `success | partial | informative_failure`.
-- `artifacts/metrics/case_summary.json` includes per-tier balance and label counts.
-   - Target benchmark size is 500 multi-turn cases per split; any lower count must be justified, tier-balanced, and explicitly logged as fellowship debt if it affects power.
-- At least one ablation comparison and one portability note are ready for report inclusion.
-- If outcome is informative_failure, report must include a one-paragraph protocol revision map and top misses by tier.
+Report any result with the command, seed, manifest path, manifest hash, and contract version.
 
-### 5a) Live Critique Pass (Impact/Execution/Clarity)
+## 6. Evidence Index
 
-Before closing Gate-5:
+```bash
+PYTHONPATH=src python3 scripts/build_evidence_manifest.py
+```
 
-- **Impact check:** ensure the primary claim remains one sentence tied to conversation-boundary control.
-- **Execution check:** rerun `make evidence` and confirm every major table/path maps to a source file in this runbook.
-- **Clarity check:** verify the same one-sentence thesis appears in abstract, methods summary, and conclusion.
+Expected outputs:
 
-Failing check requires one line in `artifacts/checks/execution_state.json` `open_items` and a target fix in the next run.
-
-## 5b) Skill Gate
-
-Run:
-- `make skills`
-
-Pass criteria:
-- `skills/*/SKILL.md` exist for `bioguard-bkt-scoring`, `bioguard-bio-trace`, `bioguard-bio-guard`, and `bioguard-bio-seq`.
-- `artifacts/records/skill_bkt_scoring.json` exists and contains one BKT event.
-- `artifacts/records/skill_bio_trace.json` and `artifacts/records/skill_bio_guard.json` validate the canonical decision path.
-- `artifacts/records/skill_bio_seq.json` exists as an explicit optional-module result, even if placeholder findings are empty.
-
-## 6) Execution State Gate
-
-Run:
-- `python -m bioguard state --state artifacts/checks/execution_state.json --note "pipeline refresh"`
-
-Pass criteria:
-- `artifacts/checks/execution_state.json` includes:
-  - `counts.total`
-  - `counts.done`
-  - `completion_pct`
-- Task records for each role in `spec/execution_state_manifest_v1.0.json` exist.
-
-## 6b) Portability Gate
-
-Pass criteria:
-- one deep host path is working end to end
-- two additional host demonstrations exist at smoke/parity or deeper level
-- every non-default behavior is captured in explicit deviation notes
-If any non-default behavior is `FALLBACK` or `MISSING`, include severity and mitigation in the same deviation row.
-
-## 6c) Demo Gate
-
-Pass criteria:
-- operator can inspect decision, rationale, uncertainty, and trace in one replay flow
-- demo can be delivered in 2-5 minutes without explaining the whole repository
-- one memorable comparison figure or table is selected for presentation
-For informative_failure, the demo must include one true positive control and one representative miss for operator interpretation.
-
-## 7) Spec-Driven Scope Enforcement
-
-No task is accepted unless it maps to one of:
-- `spec/execution_state_manifest_v1.0.json` role outputs.
-- `docs/AIxBio_Hackathon_Execution_Package.md` required submission content.
-- `docs/Fellowship_Implementation_Plan.md` milestone milestones.
-
-If a task falls outside these scopes, it is logged as `open_items` in `artifacts/checks/execution_state.json` with deferment reason.
-
-## 8) Evidence and Submission Pack
-
-Create two submission artifacts at end:
 - `artifacts/evidence/bundle_manifest.json`
 - `artifacts/evidence/report_index.json`
-- `artifacts/submission_surface/` (portable code-only submission package)
 
-Each evidence record should include:
-- `path`
-- `sha256`
-- `generated_at_utc`
-- `command`
-- `contract_version`
-- `notes`
+## 7. Optional Code-Only Bundle
 
-Run:
-- `make evidence`
-- `make submission-surface`
+The public repo should not track generated duplicate bundles. If a venue asks for a code-only zip, generate it locally:
 
-## 9) Sign-off Template
+```bash
+PYTHONPATH=src python3 scripts/build_submission_surface.py --out /tmp/bioguard_submission_surface
+```
 
-Before any final release freeze, include:
+## 8. Release Checks
 
-- Primary outcome: `success` / `partial` / `informative_failure`.
-- Top 5 false positives / false negatives (or nearest equivalent from seeded + full corpus).
-- Portability gaps and expected remediation.
-- Protocol revision note for any deviation from deterministic decision behavior.
-- Demo path summary: what is shown, in what order, and what claim each step supports.
+Before pushing a public update:
 
-Recommended one-line outcome declaration:
+1. Run the contract check.
+2. Run the screen smoke test.
+3. Run `make skills`.
+4. Run the benchmark command if any scoring, benchmark, or evaluation code changed.
+5. Confirm the README and paper point to the same repository URL.
+6. Confirm no generated duplicate bundle is staged under `artifacts/submission_surface*`.
 
-`Outcome=[success|partial|informative_failure] at fixed 5% FPR; [primary finding]; [actionable protocol revision if applicable].`
+## 9. Safety Constraints
 
-## 10) Governance Constraints
-
-- Keep sequence analysis secondary and labeled optional.
-- Do not export raw biological sequences in public artifacts unless de-identified.
-- Do not change `spec/bkt_contract_v1.0.json` without `docs/protocol_release_notes.md` update.
-- If open-weight path is used, isolate behind `ablation_only` and keep protocol path untouched.
+- Keep raw high-risk biological instructions out of public artifacts.
+- Keep sequence analysis optional unless separately reviewed.
+- Keep uncertainty visible in decision records.
+- Treat any high-confidence unsafe false negative as a disclosure issue before broad release.

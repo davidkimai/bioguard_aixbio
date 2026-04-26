@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0",
-  "project": "BioGuard Hybrid Hackathon + Fellowship Protocol Ecosystem MVP",
+  "project": "BioGuard public research prototype",
   "program_mode": "hybrid",
   "attractors": [
     {
@@ -22,10 +22,10 @@
       "proof_artifact": "artifacts/records/seed_screen.jsonl"
     },
     {
-      "id": "fut-fellowship",
-      "frame": "Hackathon is de-risking: fellowship extends portability and scale.",
-      "why_high_impact": "Keeps scope credible and execution strong for both tracks while avoiding overbuild during 3-day sprint.",
-      "proof_artifact": "docs/Fellowship_Implementation_Plan.md"
+      "id": "research-continuation",
+      "frame": "Prototype evidence should expose the next protocol revisions.",
+      "why_high_impact": "Keeps the claim bounded while making failures useful for follow-up work.",
+      "proof_artifact": "docs/BioGuard_Technical_Specification.md"
     },
     {
       "id": "operator-demo",
@@ -128,10 +128,10 @@
       "id": "report-engine",
       "owner": "Workstream 4",
       "responsibilities": [
-        "Write submission-grade report sections.",
+        "Write publication-grade report sections.",
         "Draft Limitations and Dual-Use appendix.",
-        "Map artifacts to 3 evaluation dimensions.",
-        "Prepare demo outline and portability framing."
+        "Map artifacts to the reproducibility path.",
+        "Prepare portability framing."
       ],
       "inputs": [
         "artifacts/metrics/*",
@@ -140,12 +140,12 @@
       ],
       "outputs": [
         "artifacts/docs/report_draft.md",
-        "docs/AIxBio_Hackathon_Execution_Package.md",
-        "bioguard_hackathon.tex",
+        "bioguard_aixbio_submission.tex",
+        "docs/PUBLICATION_RESEARCH_NOTES.md",
         "artifacts/conformance/conformance_report.md"
       ],
       "acceptance": [
-        "≤150-word abstract + section order matching requirement.",
+        "Abstract and method sections are readable without repo-specific jargon.",
         "Dual-use appendix present with ethical and disclosure lines.",
         "Portability and operator-utility frames are explicit."
       ]
@@ -153,20 +153,20 @@
   ],
   "milestones": [
     {
-      "name": "Day 0 Lock",
+      "name": "Contract Lock",
       "day": 0,
-      "goal": "Freeze scoring contract, output formats, attractor hierarchy, and ambitious submission targets.",
+      "goal": "Freeze scoring contract, output formats, and public evidence boundary.",
       "required_outputs": [
         "spec files validated",
         "agent role output folders created",
         "fixture seed manifest",
-        "submission proof checklist"
+        "publication proof checklist"
       ]
     },
     {
-      "name": "Day 1 Core",
+      "name": "Core Runtime",
       "day": 1,
-      "goal": "Deep host path, skill pack, and operator replay flow runnable end-to-end.",
+      "goal": "Reference runtime, skill pack, and operator replay flow runnable end-to-end.",
       "required_outputs": [
         "host-1 screen output JSONL",
         "initial API smoke artifacts",
@@ -175,7 +175,7 @@
       ]
     },
     {
-      "name": "Day 2 Evidence",
+      "name": "Evidence",
       "day": 2,
       "goal": "Produce primary table, ablation table, and portability notes.",
       "required_outputs": [
@@ -186,14 +186,14 @@
       ]
     },
     {
-      "name": "Day 3 Submission",
+      "name": "Public Submission",
       "day": 3,
-      "goal": "Deliver polished hackathon packet with appendix, demo path, and fellowship continuation plan.",
+      "goal": "Deliver polished workshop-style paper, public repo surface, and reproducibility path.",
       "required_outputs": [
         "report draft",
         "appendix completed",
-        "fellowship carry-through tasks linked",
-        "demo outline or video script"
+        "plain-English docs",
+        "public repo archive notes"
       ]
     }
   ],
@@ -207,7 +207,7 @@
       "artifacts/metrics/bootstrap.csv",
       "artifacts/docs/Limitations_DualUse.md",
       "artifacts/records/skill_bio_guard.json",
-      "bioguard_hackathon.tex",
+      "bioguard_aixbio_submission.tex",
       "artifacts/conformance/deviation_matrix.csv",
       "artifacts/conformance/conformance_report.md"
     ],

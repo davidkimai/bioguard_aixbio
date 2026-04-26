@@ -28,7 +28,7 @@
           0
         ]
       },
-      "timestamp_utc": "2026-04-25T07:16:49Z",
+      "timestamp_utc": "2026-04-26T20:08:48Z",
       "turn_index": 0,
       "uncertainty": "med",
       "uplift": {
@@ -66,7 +66,7 @@
           1
         ]
       },
-      "timestamp_utc": "2026-04-25T07:16:49Z",
+      "timestamp_utc": "2026-04-26T20:08:48Z",
       "turn_index": 1,
       "uncertainty": "med",
       "uplift": {
@@ -104,7 +104,7 @@
           2
         ]
       },
-      "timestamp_utc": "2026-04-25T07:16:49Z",
+      "timestamp_utc": "2026-04-26T20:08:48Z",
       "turn_index": 2,
       "uncertainty": "med",
       "uplift": {
@@ -142,7 +142,7 @@
           3
         ]
       },
-      "timestamp_utc": "2026-04-25T07:16:49Z",
+      "timestamp_utc": "2026-04-26T20:08:48Z",
       "turn_index": 3,
       "uncertainty": "med",
       "uplift": {
@@ -157,7 +157,7 @@
   "decision": "allow",
   "decision_hash": "91e9fd673f26747850410e1babf99b72b39fc06918de54ee176775409de31a42",
   "decision_reason": "Final decision allow due to low dimension in turn 2.",
-  "generated_at_utc": "2026-04-25T07:16:49Z",
+  "generated_at_utc": "2026-04-26T20:08:48Z",
   "host_context": {
     "artifact_version": "mvp-0.1.0",
     "contract_version": "bkt-v1.0",
@@ -173,5 +173,5 @@
     "threshold_review": 0.75
   },
   "request_id": "f48cccba-b551-9396-3f6e-a4f3d65dc416",
-  "request_ts_utc": "2026-04-25T07:16:49Z"
+  "request_ts_utc": "2026-04-26T20:08:48Z"
 }

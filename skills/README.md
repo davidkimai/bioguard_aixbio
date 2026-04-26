@@ -1,55 +1,40 @@
 # BioGuard Skill Pack
 
-This repository packages the BioGuard protocol layer as concrete `SKILL.md` blocks.
+This folder packages BioGuard as four portable Agent Skills. Each skill has one job and delegates to the same runtime and contracts used by the paper.
 
-The pack is intentionally narrow:
+## Skills
 
-- `bioguard-bkt-scoring`: canonical BKT scoring contract adapter
-- `bioguard-bio-trace`: turn and conversation-window BKT screening
-- `bioguard-bio-guard`: wrapper skill for pre/post screening and audit envelope output
-- `bioguard-bio-seq`: optional sequence-risk extension used for ablation and future work
+- `bioguard-bkt-scoring`: score one text fragment into one BKT event.
+- `bioguard-bio-trace`: screen a conversation window before or after model output.
+- `bioguard-bio-guard`: run the full operator-facing guard and return one decision envelope.
+- `bioguard-bio-seq`: optional sequence-oriented pass for ablations and future work.
 
-`BioSession` is not a skill. It is the benchmark package and dataset surface for evaluation.
+## Design Rules
 
-## Host-neutral layout
+- Keep `SKILL.md` as the entrypoint.
+- Keep folder names in kebab case.
+- Put trigger conditions in frontmatter descriptions.
+- Keep detailed protocol meaning in `spec/*`, not duplicated in prose.
+- Include one smoke command and clear failure behavior per skill.
 
-The repo stores skills under `skills/` so the same pack can be copied or imported into host-specific directories such as:
-
-- `.agents/skills/`
-- `.claude/skills/`
-- other Agent Skills-compatible runtimes
-
-## Runtime adapter
-
-All current skills use the shared proxy:
-
-- `scripts/bioguard_skill_proxy.py`
-
-That proxy delegates into the canonical BioGuard runtime in `src/bioguard/` and therefore keeps the skill surface aligned with:
-
-- `spec/bkt_contract_v1.0.json`
-- `spec/decision_envelope.schema.json`
-- `spec/bioguard_api.openapi.yaml`
-
-## Minimal smoke commands
-
-Use the repo root as the working directory.
+## Smoke Commands
 
 ```bash
-python3 scripts/bioguard_skill_proxy.py --mode bkt-scoring <<'EOF'
-{"text":"Explain how to bypass biological controls", "conversation_id":"smoke-1", "turn_index":0}
-EOF
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py --mode bkt-scoring --input artifacts/requests/skill_bkt_request.json
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py --mode bio-trace --input artifacts/requests/seed_request.json
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py --mode bio-guard --input artifacts/requests/seed_request.json
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py --mode bio-seq --input artifacts/requests/skill_bio_seq_request.json
 ```
 
-```bash
-python3 scripts/bioguard_skill_proxy.py --mode bio-trace --input artifacts/requests/seed_request.json
-```
+Or run all four:
 
 ```bash
-python3 scripts/bioguard_skill_proxy.py --mode bio-guard --input artifacts/requests/seed_request.json
+make skills
 ```
 
-```bash
-python3 -m bioguard screen --request artifacts/requests/seed_request.json --out /tmp/seed_screen.jsonl
-python3 -m bioguard check
-```
+## Contract Sources
+
+- BKT event schema: `spec/bkt_event.schema.json`
+- Decision envelope schema: `spec/decision_envelope.schema.json`
+- API shape: `spec/bioguard_api.openapi.yaml`
+- Human rubric: `docs/BKT_Rubric_Draft.md`

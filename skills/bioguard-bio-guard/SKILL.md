@@ -1,83 +1,76 @@
 ---
 name: bioguard-bio-guard
-description: Operator-facing BioGuard orchestration layer. Use when a host needs pre/post screening and a single auditable decision envelope.
+description: Runs the full BioGuard operator-facing screen. Use when a host needs pre/post conversation screening, BKT aggregation, a final allow/review/block decision, and one auditable decision envelope.
+license: Apache-2.0
+version: 1.0.0
+compatibility: Agent Skills-compatible hosts with Python 3.11 and repo access.
 ---
 
-# BioGuard Guard
+# BioGuard Bio Guard
 
-This is the operator-facing wrapper for BioGuard.
-Use it when a host should apply the full protocol (pre- and post-inference),
-return one auditable decision envelope, and keep decisions reproducible.
+## Purpose
 
-## When to use
-
-- A host needs a consistent safety boundary before and after model output.
-- Operators need one actionable output with rationale and uncertainty.
-- You need protocol parity across hosts using the same contract version.
+Use this skill as the main BioGuard entrypoint. It wraps the lower-level scoring and tracing behavior into one operator-facing result.
 
 ## Inputs
 
-- `request_id`: UUID
-- `conversation_id`: conversation context identifier
-- `turns`: list of structured turns, each with `actor`, `text`, and `index`
-- `policy_profile`:
-  - `mode`: `allow`, `review`, or `block`
-  - `threshold_allow`: numeric threshold
-  - `threshold_review`: numeric threshold
-- `host_id`: optional host label
-- `contract_version`: optional override; defaults to current contract
+Provide a BioGuard screen payload:
 
-If `contract_version` is missing or mismatched, this block returns a typed
-contract failure.
+- `request_id`: UUID
+- `conversation_id`: string
+- `turns`: structured conversation turns
+- `policy_profile`: `mode`, `threshold_allow`, and `threshold_review`
+- `host_id`: host label
+- `contract_version`: optional contract selector
+- `include_sequences`: optional boolean
+
+## Workflow
+
+1. Validate request fields and contract version.
+2. Score BKT events across the conversation window.
+3. Aggregate events under the policy thresholds.
+4. Return one decision envelope for operator review or automated gating.
+5. Keep optional sequence checks secondary to the conversation-level decision.
 
 ## Output
 
-Returns a BioGuard decision envelope with:
+Returns a decision envelope with:
 
-- `request_id`
-- `conversation_id`
-- `request_ts_utc`
-- `generated_at_utc`
-- `model_id`
-- `policy_profile`
-- `decision`
-- `decision_reason`
-- `bkt_events`
-- `host_context`
-- optional `sequence_findings`
-- optional `human_override`
-- optional `remediation_notes`
-- optional `decision_hash`
+- request identifiers
+- timestamps
+- policy profile
+- decision: `allow`, `review`, or `block`
+- decision reason
+- BKT events
+- host context
+- optional sequence findings
+- optional human override fields
+- decision hash
 
-## Decision policy
-
-- `allow`: low-confidence or low-risk aggregation
-- `review`: suspicious or uncertain transfer indicators
-- `block`: high-confidence harmful transfer signal
-
-## Error behavior
-
-- Missing required fields: returns a typed request failure object.
-- Unsupported contract: returns a typed contract failure object.
-- Empty or invalid turns: returns a typed request failure object.
-- Any successful run always returns a complete auditable envelope.
-
-## Invocation
+## Smoke Test
 
 ```bash
-python3 scripts/bioguard_skill_proxy.py --mode bio-guard --input artifacts/requests/seed_request.json
+PYTHONPATH=src python3 scripts/bioguard_skill_proxy.py \
+  --mode bio-guard \
+  --input artifacts/requests/seed_request.json
 ```
 
-Recommended smoke test:
+Recommended full check:
 
 ```bash
-python3 -m bioguard screen --request artifacts/requests/seed_request.json --out /tmp/seed_screen.jsonl
-python3 -m bioguard check
+PYTHONPATH=src python3 -m bioguard screen \
+  --request artifacts/requests/seed_request.json \
+  --out /tmp/seed_screen.jsonl
+PYTHONPATH=src python3 -m bioguard check
 ```
 
-## Notes and scope
+## Failure Behavior
 
-- This is the deployable skill for hackathon demos and host-path smoke tests.
-- The protocol source of truth is `spec/*`, not this file.
-- Keep sequence checks as a secondary pass.
-- Do not expose raw sequence content in unredacted artifacts.
+- Missing required fields return `Invalid request payload`.
+- Unsupported contract versions return `Unsupported contract`.
+- Empty turns return an invalid-request record.
+- Successful runs always return a complete auditable envelope.
+
+## Safety Notes
+
+Use `review` rather than `allow` when the signal is ambiguous but biologically consequential. Do not expose raw high-risk biological content in public decision traces.

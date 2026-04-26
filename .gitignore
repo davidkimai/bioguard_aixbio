@@ -5,3 +5,5 @@ __pycache__/
 *.out
 .artifacts_tmp/
 .DS_Store
+artifacts/submission_surface/
+artifacts/submission_surface_audit/

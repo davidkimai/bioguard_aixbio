@@ -1,39 +1,22 @@
-# BioGuard Documentation Bundle
+# BioGuard Docs
 
-## Canonical Sources
+These docs are the reviewer-facing support material for the paper and repo.
 
-- [BioGuard_Technical_Specification.md](BioGuard_Technical_Specification.md)  
-  Protocol thesis, contracts, evaluation design, execution graph, and risk framing.
-- [BKT_Rubric_Draft.md](BKT_Rubric_Draft.md)  
-  Human-facing dimension definitions and decision rationale.
-- [Operational_Runbook.md](Operational_Runbook.md)  
-  Concrete execution steps and pass/fail gates.
-- [protocol_release_notes.md](protocol_release_notes.md)  
-  Source-of-truth contract and changelog tracking.
-- [Fellowship_Implementation_Plan.md](Fellowship_Implementation_Plan.md)  
-  10-week milestone schedule mapped to artifacts.
-- [AIxBio_Hackathon_Execution_Package.md](AIxBio_Hackathon_Execution_Package.md)  
-  3-day score-optimized hackathon plan with judge-aligned scoring gates and parallel workstream model.
-- [Execution_Gates.md](Execution_Gates.md)  
-  Execution-state model, gate protocol, and runbook for hackathon + fellowship delivery.
-- [bioguard_fellowship.tex](../bioguard_fellowship.tex)  
-  Fellowship narrative draft aligned to the same thesis.
-- [bioguard_hackathon.tex](../bioguard_hackathon.tex)  
-  Hackathon-scoped narrative draft aligned to ambitious-winning-state evidence.
-- [../skills/README.md](../skills/README.md)  
-  Concrete BioGuard Skill Pack and install/invocation notes.
+## Core Docs
 
-## Machine-Readable Spec Artifacts (`/spec`)
+- `BioGuard_Technical_Specification.md`: what BioGuard is, what it measures, and how the repo pieces fit together.
+- `BKT_Rubric_Draft.md`: plain-English scoring guide for scope, depth, and uplift.
+- `Operational_Runbook.md`: exact commands for checks, screening, skills, evaluation, evidence, and packaging.
+- `PUBLICATION_RESEARCH_NOTES.md`: external guidance and patterns used for the repo cleanup.
+- `protocol_release_notes.md`: contract and packaging changes.
 
-- `spec/bkt_contract_v1.0.json`
-- `spec/bkt_event.schema.json`
-- `spec/decision_envelope.schema.json`
-- `spec/benchmark_manifest.schema.json`
-- `spec/benchmark_manifest_v1.0.json`
-- `spec/bioguard_api.openapi.yaml`
-- `spec/execution_state_manifest.schema.json`
-- `spec/execution_state_manifest_v1.0.json`
+## Source Of Truth
 
-## Execution Rule
+When prose and machine-readable files disagree, use this order:
 
-When there is any mismatch between narrative docs and machine files, machine files are the source of truth.
+1. `spec/*`
+2. `src/bioguard/*`
+3. `artifacts/metrics/reproducibility.md`
+4. docs in this directory
+
+Planning drafts and duplicate generated submission bundles were archived outside the repo at `/Users/jasontang/bioguard_aixbio_archive/20260427-publication-cleanup/`.
