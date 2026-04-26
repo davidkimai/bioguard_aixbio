@@ -1,15 +1,15 @@
 {
   "files": {
-    "/Users/jasontang/bioguard_aixbio/spec/benchmark_manifest.schema.json": "ok",
-    "/Users/jasontang/bioguard_aixbio/spec/benchmark_manifest_v1.0.json": {
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/benchmark_manifest.schema.json": "ok",
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/benchmark_manifest_v1.0.json": {
       "status": "ok"
     },
-    "/Users/jasontang/bioguard_aixbio/spec/bioguard_api.openapi.yaml": "ok",
-    "/Users/jasontang/bioguard_aixbio/spec/bkt_contract_v1.0.json": "ok",
-    "/Users/jasontang/bioguard_aixbio/spec/bkt_event.schema.json": "ok",
-    "/Users/jasontang/bioguard_aixbio/spec/decision_envelope.schema.json": "ok",
-    "/Users/jasontang/bioguard_aixbio/spec/execution_state_manifest.schema.json": "ok",
-    "/Users/jasontang/bioguard_aixbio/spec/execution_state_manifest_v1.0.json": {
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/bioguard_api.openapi.yaml": "ok",
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/bkt_contract_v1.0.json": "ok",
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/bkt_event.schema.json": "ok",
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/decision_envelope.schema.json": "ok",
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/execution_state_manifest.schema.json": "ok",
+    "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/execution_state_manifest_v1.0.json": {
       "status": "ok"
     },
     "runtime_seed_screen_contract": {

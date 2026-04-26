@@ -2,12 +2,11 @@
   "baselines": [
     "bioguard",
     "keyword-filter",
-    "llama-guard-3",
     "gpt54-zero-shot",
     "pre-inference-only",
     "post-inference-only"
   ],
-  "command": "python -m bioguard evaluate --manifest /Users/jasontang/bioguard_aixbio/spec/benchmark_manifest_v1.0.json --splits test --out /Users/jasontang/bioguard_aixbio/artifacts/metrics --seed 1 --include-ablations",
+  "command": "python -m bioguard evaluate --manifest /Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/benchmark_manifest_v1.0.json --splits test --out /Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/artifacts/metrics --seed 1 --include-ablations",
   "contract_sha256": "7cfbe4cdff36f42774e892bbec88de0be723ffb0faf3e0a0f7b40381d055d565",
   "contract_version": "bkt-v1.0",
   "dataset_files": [
@@ -30,8 +29,8 @@
       "split": "test"
     }
   ],
-  "generated_at_utc": "2026-04-26T20:13:52Z",
-  "manifest_path": "/Users/jasontang/bioguard_aixbio/spec/benchmark_manifest_v1.0.json",
+  "generated_at_utc": "2026-04-26T23:45:37Z",
+  "manifest_path": "/Users/jasontang/.gemini/antigravity/scratch/bioguard_aixbio/spec/benchmark_manifest_v1.0.json",
   "manifest_sha256": "2eba4f4f847c531765478110ce8b6251918ea86a7e4ec62d9c142baa27fabf4e",
   "manifest_version": "1.0",
   "seed": 1,
