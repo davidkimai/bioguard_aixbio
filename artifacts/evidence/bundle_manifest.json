@@ -1,195 +1,195 @@
 {
   "bundle_version": "1.1",
   "contract_version": "bkt-v1.0",
-  "generated_at_utc": "2026-04-25T07:17:53Z",
+  "generated_at_utc": "2026-04-26T21:45:21Z",
   "items": [
     {
       "path": "artifacts/checks/protocol_lock.json",
-      "sha256": "a4da36a4d30ce2fdcf7e6e1641afb687ac6a9a3ceaf2d7ab6b0cf29c22d28a0c",
-      "size_bytes": 737,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "sha256": "b857ff8eb6b8a5a2a8d154ba0a6e1dc34b98d1279704f196c5729a14e98dcc27",
+      "size_bytes": 793,
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard check"
     },
     {
       "path": "artifacts/records/seed_screen.jsonl",
       "sha256": "09611c7189d65e802c6a397af52152696031ad708601ba0bf08223de7deba318",
       "size_bytes": 3875,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard screen --request artifacts/requests/seed_request.json --out artifacts/records/seed_screen.jsonl"
     },
     {
       "path": "artifacts/records/screen_bad_request.jsonl",
       "sha256": "8cb19d3497bc1df19b0f5721357810892227ab04ff34869466ff8fbc9ada248e",
       "size_bytes": 300,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard screen --request artifacts/requests/bad_request.json --out artifacts/records/screen_bad_request.jsonl"
     },
     {
       "path": "artifacts/records/screen_bad_contract.jsonl",
       "sha256": "b81f0424789cde89fbe200ff51a5fe12628f1cd950b4cd079e5e02e5389ff82d",
       "size_bytes": 281,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard screen --request artifacts/requests/bad_contract.json --out artifacts/records/screen_bad_contract.jsonl"
     },
     {
       "path": "artifacts/records/skill_bkt_scoring.json",
-      "sha256": "aa3df8b1b8d9e466cd772be26140240ad6e6324b42d9912f6c938ac86e645078",
+      "sha256": "e5cea8a8e1ffc6e804052c18cdb90c9382c35c65edfc65e17f85003b95fcb5b2",
       "size_bytes": 1026,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python scripts/bioguard_skill_proxy.py --mode bkt-scoring --input artifacts/requests/skill_bkt_request.json --out artifacts/records/skill_bkt_scoring.json"
     },
     {
       "path": "artifacts/records/skill_bio_trace.json",
-      "sha256": "f86a012a02d8e51084f4bb4ec35510e8d54b1d35ee58a26da851d1bc0c2c779f",
+      "sha256": "3679f2fbea96d4133a9dcc302ba66419cf8fe24428cf6f14d605cc82c2e57c54",
       "size_bytes": 4928,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python scripts/bioguard_skill_proxy.py --mode bio-trace --input artifacts/requests/seed_request.json --out artifacts/records/skill_bio_trace.json"
     },
     {
       "path": "artifacts/records/skill_bio_guard.json",
-      "sha256": "f86a012a02d8e51084f4bb4ec35510e8d54b1d35ee58a26da851d1bc0c2c779f",
+      "sha256": "3679f2fbea96d4133a9dcc302ba66419cf8fe24428cf6f14d605cc82c2e57c54",
       "size_bytes": 4928,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python scripts/bioguard_skill_proxy.py --mode bio-guard --input artifacts/requests/seed_request.json --out artifacts/records/skill_bio_guard.json"
     },
     {
       "path": "artifacts/records/skill_bio_seq.json",
       "sha256": "40c8b8c1538aa5734813d6011a50391c4923335a2eb6b9dbb1ecb24a30aec1ee",
       "size_bytes": 281,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python scripts/bioguard_skill_proxy.py --mode bio-seq --input artifacts/requests/skill_bio_seq_request.json --out artifacts/records/skill_bio_seq.json"
     },
     {
       "path": "artifacts/metrics/results.json",
-      "sha256": "692dd19372681ca9b5327410630dba0a4ca626a0ddce85a534327b10df306c0b",
-      "size_bytes": 554102,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "sha256": "7d2d124b9746f26eea92701f56fd21c5763b335e52c4847679d084be1a585394",
+      "size_bytes": 554045,
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/bootstrap.csv",
       "sha256": "92d01d8f80594872bd79c135763e19d5dbaa65288eddb09f5c70e7446cf3244e",
       "size_bytes": 203,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/confusion_matrix.csv",
       "sha256": "c42004f74c718c3353723a0307a2dcc9b90d6e859c248ff304e64818a0fd02c7",
       "size_bytes": 1042,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/case_predictions.jsonl",
       "sha256": "f309b5768a811718f00a2077e54eff0b0c722081ca3e13dd3c7eeef139292247",
       "size_bytes": 405522,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/case_summary.json",
       "sha256": "e391c04ade38aedbaf0bd76edfa2c1d57056e463c3cda04889000839e94e1106",
       "size_bytes": 445,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/outcome.json",
       "sha256": "e67637a7259c583be3e4a01d09573c912f4adc1eb56d269c00787a4f151dedae",
       "size_bytes": 643,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/reproducibility.json",
-      "sha256": "6a37b261b707b51478b925335b83119c9b8db25043f7658d77067f1fa5b6665e",
-      "size_bytes": 1485,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "sha256": "f0112b6ee363f465459f9141373197111cb7f7c82af32c2e9ba4b13a09dabf5f",
+      "size_bytes": 1428,
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/reproducibility.md",
-      "sha256": "12d9ba3ea3fb1fc61bdd1e54ec16262f925135025e005d479dfb2db34b9d97a3",
-      "size_bytes": 711,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "sha256": "e1cb6fa0aa18f671511418ed7574f63a133e927a2205d232e790af8c8ca5bd80",
+      "size_bytes": 732,
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/hackathon_results.md",
       "sha256": "902f7cf47fc19eacf25c676a31861474196269bbf307529b5f4a70bd077ecc84",
       "size_bytes": 972,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/metrics/ablation_results.md",
       "sha256": "b09a7f82690be1f30e0eeb5195a6f8f866a854d23de5e36f28a997acfbb0b766",
       "size_bytes": 640,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --seed 1 --splits test --out artifacts/metrics"
     },
     {
       "path": "artifacts/conformance/deviation_matrix.csv",
       "sha256": "e5933787bfbba7b5cc221d8ac155751cee364d6fdbf8e5cce7a2044a6baadcdd",
       "size_bytes": 5029,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "Manual portability matrix capture for host conformance."
     },
     {
       "path": "artifacts/conformance/deviation_matrix.json",
       "sha256": "169385213c2594d6fb3aaf9e72c8ba3ebea8b939ec660b5c11cec867e29ce401",
       "size_bytes": 8969,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "Manual portability matrix capture for host conformance."
     },
     {
       "path": "artifacts/conformance/conformance_report.md",
       "sha256": "2cb7d7a621e33fcf281e2748dbeb8bd278b4387fd6ce6a8479a11b7474f06e49",
       "size_bytes": 3365,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "Manual portability report synthesis from profile and matrix artifacts."
     },
     {
       "path": "artifacts/conformance/host_capability_profile.json",
       "sha256": "4eaa1f4bc0a39e4743afd670c07e21ee28cff6693cea69e78b38de35e1a99844",
       "size_bytes": 1163,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "Manual host capability profile capture."
     },
     {
       "path": "artifacts/conformance/host_capability_profile_host-2.json",
       "sha256": "199781b0526e896386923480bac7a510c8b67e658d0793c5e58a3aa57f6ab81c",
       "size_bytes": 1298,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "Manual host capability profile capture."
     },
     {
       "path": "artifacts/conformance/host_capability_profile_host-3.json",
       "sha256": "97874d35625353180908c422e3afd6c16d78ceabddecd686517ad40be5807f94",
       "size_bytes": 1254,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "Manual host capability profile capture."
     },
     {
       "path": "artifacts/checks/execution_state.json",
-      "sha256": "12f974034464e5607c668227ec4060bc52f15c6f198b9a8726eb1ed933f5dc9f",
-      "size_bytes": 1257,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "sha256": "78ce5ac290e5896935382301d61ef6600b0226cabbf84560e6aec45140afc94a",
+      "size_bytes": 1289,
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "python -m bioguard state --state artifacts/checks/execution_state.json"
     },
     {
       "path": "artifacts/docs/Limitations_DualUse.md",
       "sha256": "340325cebd9f3a8777847442152895a7f0b64ffdef2133cf3d7b8f698e00f93b",
       "size_bytes": 1442,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "manual"
     },
     {
       "path": "artifacts/docs/report_draft.md",
-      "sha256": "e767bfd52ad2be9f198f5e22e1cbf00aaf20e19721492fb8988db409282caceb",
-      "size_bytes": 7576,
-      "generated_at_utc": "2026-04-25T07:17:53Z",
+      "sha256": "533f992a1dddc6b60d95b11e32bbf2585a609f1c1b6bf6c83bae072c05902dcc",
+      "size_bytes": 2023,
+      "generated_at_utc": "2026-04-26T21:45:21Z",
       "command": "manual"
     }
   ]
