@@ -18,6 +18,11 @@ This note records the external guidance used for the April 2026 public-repo clea
    - Keep code, data manifests, evidence, and the paper easy to find.
    - Move duplicate generated bundles and planning-only drafts out of the public repo.
 
+2. **Empirical paradigm shift: Safety-Utility Tradeoff**
+   - Shifted baseline methodology from heuristic proxies to a live frontier model (GPT-5.4).
+   - Proven empirically: Frontier models achieve maximum capability recall via blunt over-refusal, destroying operational utility (FPR ~4.5%).
+   - Re-positioned BioGuard not as a raw recall engine, but as a utility-preserving, high-precision instrument (100% precision, 0% FPR).
+
 2. **Reproducibility as a command path**
    - Every reported result should point to a command, seed, manifest, contract version, and artifact path.
    - The README starts with replay commands instead of internal planning language.

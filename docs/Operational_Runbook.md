@@ -80,8 +80,10 @@ Pass condition:
 
 ## 5. Benchmark Evaluation
 
+Note: The full benchmark requires a live API key to evaluate the GPT-5.4 zero-shot proxy condition.
+
 ```bash
-PYTHONPATH=src python3 -m bioguard evaluate \
+OPENAI_API_KEY="sk-..." PYTHONPATH=src python3 -m bioguard evaluate \
   --manifest spec/benchmark_manifest_v1.0.json \
   --splits test \
   --seed 1 \
