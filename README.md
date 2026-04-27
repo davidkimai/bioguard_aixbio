@@ -18,7 +18,7 @@ Run from the repository root:
 ```bash
 PYTHONPATH=src python3 -m bioguard check
 PYTHONPATH=src python3 -m bioguard screen --request artifacts/requests/seed_request.json --out /tmp/seed_screen.jsonl
-PYTHONPATH=src python3 -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --splits test --seed 1 --out /tmp/bioguard_metrics
+OPENAI_API_KEY="sk-..." PYTHONPATH=src python3 -m bioguard evaluate --manifest spec/benchmark_manifest_v1.0.json --splits test --seed 1 --out /tmp/bioguard_metrics
 ```
 
 The main result files are:
